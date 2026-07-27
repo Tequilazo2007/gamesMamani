@@ -12,7 +12,7 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
 };
 
 /* ==========================================================================
-   SISTEMA DE AUDIO â€” Archivos de Audio Reales
+   SISTEMA DE AUDIO — Archivos de Audio Reales
    ========================================================================== */
 const sistemaAudio = {
     volumenMusica: 0.35,
@@ -235,12 +235,12 @@ const UI_CONFIG = {
     }
 };
 
-// â”€â”€ Variables de estado (ahora solo como fallback de referencia) â”€â”€
+// ── Variables de estado (ahora solo como fallback de referencia) ──
 let toastActual = null;       // Mantenido para compatibilidad
 let confirmacionActual = null; // Mantenido para compatibilidad
 
 /* ==========================================================================
-   SISTEMA DE TOAST HTML â€” Notificaciones elegantes sobre el canvas
+   SISTEMA DE TOAST HTML — Notificaciones elegantes sobre el canvas
    ========================================================================== */
 const _toastContainer = document.getElementById('toast-container');
 
@@ -265,7 +265,7 @@ function mostrarToast(texto, subtexto, tipo) {
     setTimeout(() => { if (div.parentNode) div.parentNode.removeChild(div); }, duracion);
 }
 
-// â”€â”€ Botón de Mute â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Botón de Mute ─────────────────────────────────────────────────────────
 const MUTE_BTN = { x: 460, y: 255, w: 18, h: 12 };
 
 function dibujarBotonMute() {
@@ -286,18 +286,18 @@ function dibujarBotonMute() {
     ctx.fillStyle = sistemaAudio.silenciado ? "#e74c3c" : "#2ecc71";
     ctx.font = "7px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(sistemaAudio.silenciado ? "ðŸ”‡" : "ðŸ”Š", b.x + b.w / 2, b.y + b.h - 2);
+    ctx.fillText(sistemaAudio.silenciado ? "🔇" : "🔊", b.x + b.w / 2, b.y + b.h - 2);
     ctx.textAlign = "left";
 
     if (hover) canvas.style.cursor = "pointer";
 }
 
-// dibujarToast() es un stub vacío â€” las notificaciones ahora usan HTML
+// dibujarToast() es un stub vacío — las notificaciones ahora usan HTML
 function dibujarToast() { /* Las toasts son HTML; nada que dibujar en canvas */ }
 
 
 /* ==========================================================================
-   SISTEMA DE CONFIRMACIÃ“N HTML â€” Reemplaza confirm() del navegador
+   SISTEMA DE CONFIRMACIÃ“N HTML — Reemplaza confirm() del navegador
    ========================================================================== */
 const _confirmUI = document.getElementById('confirmacion-ui');
 
@@ -385,7 +385,7 @@ function dibujarDialogoRPG(retratoBase64, nombre, texto, parpadeo, posicionTop =
     // Flecha parpadeante (haz clic para continuar)
     if (parpadeo && Math.floor(Date.now() / 400) % 2 === 0) {
         ctx.fillStyle = "#f1c40f";
-        ctx.fillText("â–¼", 480 - margin - 20, boxY + boxHeight - 8);
+        ctx.fillText("▼", 480 - margin - 20, boxY + boxHeight - 8);
     }
 
     // Dibujar el retrato (Yatiri) en un círculo
@@ -421,7 +421,7 @@ function dibujarDialogoRPG(retratoBase64, nombre, texto, parpadeo, posicionTop =
         ctx.stroke();
     }
 }
-// dibujarConfirmacion() es un stub vacío â€” el modal ahora usa HTML
+// dibujarConfirmacion() es un stub vacío — el modal ahora usa HTML
 // La variable confirmacionActual aún se usa en el manejador de clics del canvas
 // para bloquear interacciones mientras el modal HTML está abierto.
 function dibujarConfirmacion() { /* El modal de confirmación es HTML; nada que dibujar en canvas */ }
@@ -430,7 +430,7 @@ function dibujarConfirmacion() { /* El modal de confirmación es HTML; nada que 
 /* ==========================================================================
    5.1. VARIABLES DE CUTSCENE (Intro Narrativa)
    ========================================================================== */
-// â”€â”€ Cinemática de Transición Acto 1 â†’ 2 (Valles y Minas de Potosí) â”€â”€
+// ── Cinemática de Transición Acto 1 → 2 (Valles y Minas de Potosí) ──
 const imgCineActo2_1Base64 = "img/cine_acto2_1.webp";
 const imgCineActo2_2Base64 = "img/cine_acto2_2.webp";
 const imgCineActo2_3Base64 = "img/cine_acto2_3.webp";
@@ -470,7 +470,7 @@ let cutsceneTituloIndex = 0;        // Caracteres del título revelados
 const TYPEWRITER_VELOCIDAD = 30;    // ms por caracter
 let cutsceneUltimoTick = 0;
 
-// â”€â”€ Catálogo de cinemáticas de transición entre Actos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Catálogo de cinemáticas de transición entre Actos ────────────────────────
 const CUTSCENE_SLIDES_ACTO2 = [
     {
         titulo: "El Adiós a la Selva",
@@ -498,7 +498,7 @@ const CUTSCENE_SLIDES_ACTO2 = [
     }
 ];
 
-// â”€â”€ Cinemática de Transición Acto 2 â†’ 3 (Altiplano y Salar de Uyuni) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Cinemática de Transición Acto 2 → 3 (Altiplano y Salar de Uyuni) ───────────
 const CUTSCENE_SLIDES_ACTO3 = [
     {
         titulo: "Plata y Sangre",
@@ -526,13 +526,13 @@ let cutsceneOnEnd = null;
    ========================================================================== */
 /*
  * Tipos de paso:
- *  INFO   â†’ Panel informativo central, auto-avanza (toca para saltar)
- *  ACCION â†’ El jugador DEBE hacer algo (spotlight activo, input restringido)
- *  MISION â†’ Pantalla dramática de misión (auto-avanza)
- *  LIBRE  â†’ Combate sin restricciones hasta matar al enemigo
+ *  INFO   → Panel informativo central, auto-avanza (toca para saltar)
+ *  ACCION → El jugador DEBE hacer algo (spotlight activo, input restringido)
+ *  MISION → Pantalla dramática de misión (auto-avanza)
+ *  LIBRE  → Combate sin restricciones hasta matar al enemigo
  */
 const TUTORIAL_PASOS = [
-    // â”€â”€ Paso 0: Bienvenida â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 0: Bienvenida ──────────────────────────────────────────────
     {
         id: 0, tipo: "INFO", duracion: 4000,
         color: "#2ecc71",
@@ -544,7 +544,7 @@ const TUTORIAL_PASOS = [
         ],
         spotlight: null, accion: "AUTO"
     },
-    // â”€â”€ Paso 1: Explicar Energía â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 1: Explicar Energía ────────────────────────────────────────
     {
         id: 1, tipo: "INFO", duracion: 4500,
         color: "#f39c12",
@@ -557,7 +557,7 @@ const TUTORIAL_PASOS = [
         spotlight: { x: 330, y: 6, w: 95, h: 28 },
         accion: "AUTO"
     },
-    // â”€â”€ Paso 2: Jugar carta ROJA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 2: Jugar carta ROJA ────────────────────────────────────────
     {
         id: 2, tipo: "ACCION",
         color: "#e74c3c",
@@ -570,7 +570,7 @@ const TUTORIAL_PASOS = [
         spotlight: { x: 75, y: 196, w: 62, h: 70 },
         accion: "JUGAR_OFENSIVA"
     },
-    // â”€â”€ Paso 3: Explicar resultado del ataque â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 3: Explicar resultado del ataque ───────────────────────────
     {
         id: 3, tipo: "INFO", duracion: 4000,
         color: "#e74c3c",
@@ -582,7 +582,7 @@ const TUTORIAL_PASOS = [
         ],
         spotlight: null, accion: "AUTO"
     },
-    // â”€â”€ Paso 4: Jugar carta AZUL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 4: Jugar carta AZUL ────────────────────────────────────────
     {
         id: 4, tipo: "ACCION",
         color: "#3498db",
@@ -595,7 +595,7 @@ const TUTORIAL_PASOS = [
         spotlight: { x: 134, y: 196, w: 62, h: 70 },
         accion: "JUGAR_DEFENSIVA"
     },
-    // â”€â”€ Paso 5: Explicar resultado de defensa â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 5: Explicar resultado de defensa ───────────────────────────
     {
         id: 5, tipo: "INFO", duracion: 4000,
         color: "#3498db",
@@ -607,7 +607,7 @@ const TUTORIAL_PASOS = [
         ],
         spotlight: null, accion: "AUTO"
     },
-    // â”€â”€ Paso 6: Terminar Turno â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 6: Terminar Turno ──────────────────────────────────────────
     {
         id: 6, tipo: "ACCION",
         color: "#e67e22",
@@ -620,7 +620,7 @@ const TUTORIAL_PASOS = [
         spotlight: { x: 399, y: 204, w: 72, h: 34 },
         accion: "TERMINAR_TURNO"
     },
-    // â”€â”€ Paso 7: El enemigo atacó, AP restaurado â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 7: El enemigo atacó, AP restaurado ─────────────────────────
     {
         id: 7, tipo: "INFO", duracion: 4000,
         color: "#9b59b6",
@@ -632,7 +632,7 @@ const TUTORIAL_PASOS = [
         ],
         spotlight: null, accion: "AUTO"
     },
-    // â”€â”€ Paso 8: MISIÃ“N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 8: MISIÃ“N ──────────────────────────────────────────────────
     {
         id: 8, tipo: "MISION", duracion: 4500,
         color: "#e74c3c",
@@ -645,7 +645,7 @@ const TUTORIAL_PASOS = [
         ],
         spotlight: null, accion: "AUTO"
     },
-    // â”€â”€ Paso 9: LIBRE â€” matar al enemigo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Paso 9: LIBRE — matar al enemigo ───────────────────────────────
     {
         id: 9, tipo: "LIBRE",
         color: "#ffcc00",
@@ -825,11 +825,11 @@ const jugador = {
     // Sistema de mano fija de 5 categorías
     // Al inicio solo Ofensiva + Defensiva desbloqueadas; el resto se compra en la Tienda
     mano: {
-        ofensiva: { ...CARTAS_BASE.ofensiva },    // âœ“ Desbloqueada desde el inicio
-        defensiva: { ...CARTAS_BASE.defensiva },   // âœ“ Desbloqueada desde el inicio
-        elemental: null,   // ðŸ”’ Bloqueada - desbloquear en Tienda
-        mejora: null,      // ðŸ”’ Bloqueada - desbloquear en Tienda
-        nerfeo: null       // ðŸ”’ Bloqueada - desbloquear en Tienda
+        ofensiva: { ...CARTAS_BASE.ofensiva },    // ✓ Desbloqueada desde el inicio
+        defensiva: { ...CARTAS_BASE.defensiva },   // ✓ Desbloqueada desde el inicio
+        elemental: null,   // 🔒 Bloqueada - desbloquear en Tienda
+        mejora: null,      // 🔒 Bloqueada - desbloquear en Tienda
+        nerfeo: null       // 🔒 Bloqueada - desbloquear en Tienda
     },
 
     // Espacio para guardar las reliquias activas (ej. La Chakana Eterna)
@@ -1203,7 +1203,7 @@ function activarAnimacion(objetivo, tipo, opciones = {}) {
     if (opciones.cat) animaciones[objetivo].cat = opciones.cat;
 
     if (tipo === 'ataque') {
-        // Iniciar secuencia faseada: anticip â†’ avance â†’ impacto â†’ retroceso
+        // Iniciar secuencia faseada: anticip → avance → impacto → retroceso
         animaciones[objetivo].fase = 'anticip';
         animaciones[objetivo].faseTick = 0;
         animaciones[objetivo].inclinacion = (objetivo === 'jugador') ? -0.18 : 0.18;
@@ -1225,7 +1225,7 @@ function activarAnimacion(objetivo, tipo, opciones = {}) {
 
     } else if (tipo === 'escudo') {
         animaciones[objetivo].shieldFlash = 45;
-        // Efecto de aura de escudo â€” onda suave azul/verde
+        // Efecto de aura de escudo — onda suave azul/verde
         const cfg = ANIM_CONFIG[cat] || ANIM_CONFIG.defensiva;
         const cx = (objetivo === 'jugador') ? 80 : 390;
         animaciones.ondaChoque = { x: cx, y: 155, radio: 8, maxRadio: 55, vida: 30, maxVida: 30, color: cfg.ondaColor };
@@ -1559,7 +1559,7 @@ function dibujarEfectosEspeciales() {
 
         } else if (p.tipo === 'defensiva') {
 
-            // Orbe de escudo â€” círculo con brillo
+            // Orbe de escudo — círculo con brillo
             const r = 7;
             const grad = ctx.createRadialGradient(0, 0, 1, 0, 0, r);
             grad.addColorStop(0, '#ffffff');
@@ -1740,13 +1740,13 @@ function dibujarEfectosEspeciales() {
 }
 
 // ==========================================
-// SISTEMA DE NODOS DEL MAPA â€” DINÁMICO POR ACTO
+// SISTEMA DE NODOS DEL MAPA — DINÁMICO POR ACTO
 // ==========================================
 // Cada acto tiene su propio mapa con nodos, ciudades y conexiones únicos.
 // Al pasar de acto, reiniciarMapaParaNuevoActo() carga el array correspondiente.
 
 const NODOS_POR_ACTO = {
-    // â”€â”€ ACTO 0: TUTORIAL (Mapa Simplificado) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 0: TUTORIAL (Mapa Simplificado) ─────────────────────────
     0: [
         { id: 0, x: 50, y: 150, tipo: "INICIO", ciudad: "Tu Casa", label: "INICIO", completado: true, disponible: false, conexiones: [1] },
         { id: 1, x: 115, y: 150, tipo: "COMBATE", ciudad: "Entrenamiento", label: "COMBATE", completado: false, disponible: true, conexiones: [2] },
@@ -1756,7 +1756,7 @@ const NODOS_POR_ACTO = {
         { id: 5, x: 380, y: 150, tipo: "JEFE", ciudad: "Prueba Final", label: "JEFE", completado: false, disponible: false, conexiones: [] }
     ],
 
-    // â”€â”€ ACTO 1: AMAZONÍA (Pando â†’ Beni â†’ Santa Cruz) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 1: AMAZONÍA (Pando → Beni → Santa Cruz) ─────────────────────────
     1: [
         { id: 0, x: 98, y: 59, tipo: "INICIO", ciudad: "Cobija", label: "INICIO", completado: true, disponible: false, conexiones: [1, 5] },
         { id: 1, x: 167, y: 70, tipo: "COMBATE", ciudad: "Puerto Rico", label: "COMBATE", completado: false, disponible: true, conexiones: [2] },
@@ -1773,10 +1773,10 @@ const NODOS_POR_ACTO = {
         { id: 12, x: 53, y: 206, tipo: "JEFE", ciudad: "El Jichi", label: "JEFE", completado: false, disponible: false, conexiones: [] }
     ],
 
-    // â”€â”€ ACTO 2: VALLES Y MINAS DE POTOSÍ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // Ruta Norte (lenta/segura): Cochabamba â†’ Tarata â†’ Mizque â†’ Aiquile â†’ Sucre
-    // Ruta Sur (rápida/peligrosa): Cochabamba â†’ Quillacollo â†’ Camargo â†’ Tupiza
-    // Convergencia: Potosí â†’ El Tío de la Mina (Jefe)
+    // ── ACTO 2: VALLES Y MINAS DE POTOSÍ ─────────────────────────────────────
+    // Ruta Norte (lenta/segura): Cochabamba → Tarata → Mizque → Aiquile → Sucre
+    // Ruta Sur (rápida/peligrosa): Cochabamba → Quillacollo → Camargo → Tupiza
+    // Convergencia: Potosí → El Tío de la Mina (Jefe)
     2: [
         { id: 0, x: 105, y: 55, tipo: "INICIO", ciudad: "Cochabamba", label: "INICIO", completado: true, disponible: false, conexiones: [1, 4] },
         { id: 1, x: 242, y: 50, tipo: "COMBATE", ciudad: "Camino Cbba", label: "COMBATE", completado: false, disponible: true, conexiones: [2] },
@@ -1790,8 +1790,8 @@ const NODOS_POR_ACTO = {
         { id: 9, x: 350, y: 185, tipo: "JEFE", ciudad: "Cerro Rico", label: "JEFE", completado: false, disponible: false, conexiones: [] }
     ],
 
-    // â”€â”€ ACTO 3: ALTIPLANO Y SALAR CÃ“SMICO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // â”€â”€ ACTO 3: SALAR CÃ“SMICO (Trayectoria de la línea azul) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 3: ALTIPLANO Y SALAR CÃ“SMICO ────────────────────────────────────
+    // ── ACTO 3: SALAR CÃ“SMICO (Trayectoria de la línea azul) ────────────────────────────────────
     // Ruta lineal desde La Paz hacia el corazón del Salar Cósmico
     3: [
         { id: 0, x: 215, y: 70, tipo: "INICIO", ciudad: "La Paz", label: "INICIO", completado: true, disponible: false, conexiones: [1] },
@@ -1804,7 +1804,7 @@ const NODOS_POR_ACTO = {
     ]
 
 };
-// nodosMapa es la lista activa del acto actual â€” se reasigna al cambiar de acto
+// nodosMapa es la lista activa del acto actual — se reasigna al cambiar de acto
 let nodosMapa = JSON.parse(JSON.stringify(NODOS_POR_ACTO[1]));
 
 // ==========================================
@@ -1818,68 +1818,68 @@ let nodosMapa = JSON.parse(JSON.stringify(NODOS_POR_ACTO[1]));
 // ==========================================
 // Los ítems se identifican por su ID único (usado en usarItem()).
 // Los nodos de tienda tienen diferentes IDs en cada acto, así que
-// no hay colisión: Acto1â†’{4,5}, Acto2â†’{4,7}, Acto3â†’{3,7,10}.
+// no hay colisión: Acto1→{4,5}, Acto2→{4,7}, Acto3→{3,7,10}.
 // La función obtenerItemsTiendaActual() combina actoActual + nodoActualIndex
 // para devolver los ítems correctos en cada pantalla de tienda.
 
 const TIENDAS_POR_NODO = {
-    // â”€â”€ ACTO 1: AMAZONÍA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 1: AMAZONÍA ────────────────────────────────────────────────────
     "1_4": { // Trinidad: Mercado Beniense
         titulo: "Mercado de Trinidad",
         items: [
             { id: "majadito", nombre: "Majadito", costo: 15, x: 90, y: 80, desc: "+25 Vida", emoji: "ðŸ›" },
-            { id: "copaiba", nombre: "Bálsamo Copaiba", costo: 20, x: 260, y: 80, desc: "+15 Def.", emoji: "ðŸ§ª" },
+            { id: "copaiba", nombre: "Bálsamo Copaiba", costo: 20, x: 260, y: 80, desc: "+15 Def.", emoji: "🧪" },
             { id: "cerbatana", nombre: "Cerbatana", costo: 30, x: 90, y: 145, desc: "35 Daño", emoji: "ðŸ¹" },
-            { id: "unadegato", nombre: "Uña de Gato", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸŒ¿" }
+            { id: "unadegato", nombre: "Uña de Gato", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "🌿" }
         ]
     },
     "1_5": { // Guayaramerín: Barraca del Maderero
         titulo: "Barraca del Maderero",
         items: [
-            { id: "castana", nombre: "Castaña", costo: 12, x: 90, y: 80, desc: "+20 Vida", emoji: "ðŸŒ°" },
-            { id: "aceiteselva", nombre: "Aceite Almendra", costo: 18, x: 260, y: 80, desc: "+15 Def.", emoji: "ðŸ’§" },
+            { id: "castana", nombre: "Castaña", costo: 12, x: 90, y: 80, desc: "+20 Vida", emoji: "🌰" },
+            { id: "aceiteselva", nombre: "Aceite Almendra", costo: 18, x: 260, y: 80, desc: "+15 Def.", emoji: "💧" },
             { id: "machete", nombre: "Machete", costo: 32, x: 90, y: 145, desc: "38 Daño", emoji: "ðŸ—¡ï¸" },
-            { id: "resinaselva", nombre: "Sangre de Grado", costo: 22, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸ©¸" }
+            { id: "resinaselva", nombre: "Sangre de Grado", costo: 22, x: 260, y: 145, desc: "Sana Males", emoji: "🩸" }
         ]
     },
 
-    // â”€â”€ ACTO 2: VALLES Y MINAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 2: VALLES Y MINAS ───────────────────────────────────────────────
     "2_8": { // Potosí
         titulo: "Mercado de Potosí",
         items: [
             { id: "chicha", nombre: "Chicha de Maíz", costo: 18, x: 90, y: 80, desc: "+30 Vida", emoji: "ðŸº" },
             { id: "cuero", nombre: "Escudo de Cuero", costo: 28, x: 260, y: 80, desc: "+18 Def.", emoji: "ðŸ›¡ï¸" },
             { id: "plata", nombre: "Plata del Cerro", costo: 35, x: 90, y: 145, desc: "+20 Def.", emoji: "âš™ï¸" },
-            { id: "menta", nombre: "Hierba Menta", costo: 22, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸŒ±" }
+            { id: "menta", nombre: "Hierba Menta", costo: 22, x: 260, y: 145, desc: "Sana Males", emoji: "🌱" }
         ]
     },
 
-    // â”€â”€ ACTO 3: ALTIPLANO Y SALAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 3: ALTIPLANO Y SALAR ────────────────────────────────────────────
     "3_3": { // La Paz: Feria de Alasitas
         titulo: "Feria de Alasitas",
         items: [
             { id: "lluchu", nombre: "Tunta", costo: 20, x: 90, y: 80, desc: "+35 Vida", emoji: "â˜ï¸" },
-            { id: "hoja", nombre: "Hoja de Coca", costo: 30, x: 260, y: 80, desc: "+25 Def.", emoji: "ðŸŒ¿" },
-            { id: "boleadora", nombre: "Boleadora", costo: 40, x: 90, y: 145, desc: "45 Daño", emoji: "âš¡" },
-            { id: "incienso", nombre: "Incienso del Cerro", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸ’¨" }
+            { id: "hoja", nombre: "Hoja de Coca", costo: 30, x: 260, y: 80, desc: "+25 Def.", emoji: "🌿" },
+            { id: "boleadora", nombre: "Boleadora", costo: 40, x: 90, y: 145, desc: "45 Daño", emoji: "⚡" },
+            { id: "incienso", nombre: "Incienso del Cerro", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "💨" }
         ]
     },
     "3_7": { // Yungas: Mercado de los Espíritus
         titulo: "Mercado de los Espíritus",
         items: [
             { id: "locoto", nombre: "Locoto Silvestre", costo: 18, x: 90, y: 80, desc: "+30 Vida", emoji: "ðŸŒ¶ï¸" },
-            { id: "aymara", nombre: "Amuleto Aymara", costo: 35, x: 260, y: 80, desc: "+22 Def.", emoji: "ðŸª¬" },
-            { id: "suri", nombre: "Pluma de Suri", costo: 38, x: 90, y: 145, desc: "42 Daño", emoji: "ðŸ¦¤" },
-            { id: "koa", nombre: "K'oa Sagrada", costo: 28, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸ”¥" }
+            { id: "aymara", nombre: "Amuleto Aymara", costo: 35, x: 260, y: 80, desc: "+22 Def.", emoji: "🪬" },
+            { id: "suri", nombre: "Pluma de Suri", costo: 38, x: 90, y: 145, desc: "42 Daño", emoji: "🦤" },
+            { id: "koa", nombre: "K'oa Sagrada", costo: 28, x: 260, y: 145, desc: "Sana Males", emoji: "🔥" }
         ]
     },
     "3_10": { // Uyuni: Puesto del Salar
         titulo: "Puesto del Salar",
         items: [
-            { id: "quinua", nombre: "Quinua Real", costo: 22, x: 90, y: 80, desc: "+35 Vida", emoji: "ðŸŒ¾" },
-            { id: "sal", nombre: "Escudo de Sal", costo: 32, x: 260, y: 80, desc: "+28 Def.", emoji: "ðŸ§‚" },
-            { id: "hacha", nombre: "Hacha de Obsidiana", costo: 45, x: 90, y: 145, desc: "50 Daño", emoji: "ðŸª“" },
-            { id: "palo", nombre: "Palo Santo", costo: 30, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸªµ" }
+            { id: "quinua", nombre: "Quinua Real", costo: 22, x: 90, y: 80, desc: "+35 Vida", emoji: "🌾" },
+            { id: "sal", nombre: "Escudo de Sal", costo: 32, x: 260, y: 80, desc: "+28 Def.", emoji: "🧂" },
+            { id: "hacha", nombre: "Hacha de Obsidiana", costo: 45, x: 90, y: 145, desc: "50 Daño", emoji: "🪓" },
+            { id: "palo", nombre: "Palo Santo", costo: 30, x: 260, y: 145, desc: "Sana Males", emoji: "🪵" }
         ]
     }
 };
@@ -1887,14 +1887,14 @@ const TIENDAS_POR_NODO = {
 const TIENDA_FALLBACK = {
     titulo: "Mercado Andino",
     items: [
-        { id: "saltena", nombre: "Salteña", costo: 15, x: 90, y: 80, desc: "+25 Vida", emoji: "ðŸ¥Ÿ" },
-        { id: "copaiba", nombre: "Bálsamo", costo: 20, x: 260, y: 80, desc: "+15 Def.", emoji: "ðŸ§ª" },
-        { id: "honda", nombre: "Honda", costo: 30, x: 90, y: 145, desc: "35 Daño", emoji: "ðŸª¨" },
-        { id: "menta", nombre: "Hierba Menta", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "ðŸŒ±" }
+        { id: "saltena", nombre: "Salteña", costo: 15, x: 90, y: 80, desc: "+25 Vida", emoji: "🥟" },
+        { id: "copaiba", nombre: "Bálsamo", costo: 20, x: 260, y: 80, desc: "+15 Def.", emoji: "🧪" },
+        { id: "honda", nombre: "Honda", costo: 30, x: 90, y: 145, desc: "35 Daño", emoji: "🪨" },
+        { id: "menta", nombre: "Hierba Menta", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "🌱" }
     ]
 };
 
-// â”€â”€ SISTEMA DE BUFFS POR NIVELES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SISTEMA DE BUFFS POR NIVELES ───────────────────────────────────────
 const BUFFS_NIVELES = [
     {
         id: 'vitalidad',
@@ -1911,7 +1911,7 @@ const BUFFS_NIVELES = [
     {
         id: 'energia',
         nombre: 'Energía del Cóndor',
-        icono: 'âš¡',
+        icono: '⚡',
         color: '#f1c40f',
         colorOsc: 'rgba(100,80,0,0.45)',
         niveles: [
@@ -1981,97 +1981,97 @@ function obtenerPasivasTiendaActual() {
 }
 
 const POOL_CARTAS_TIENDA = [
-    // â”€â”€â”€ Elementales â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Elementales ────────────────────────────────────────────────────────
     {
-        id: "ce1", nombre: "Torrente Jichi", costo: 55, desc: "35 daño. Empapado", categoria: "elemental", emoji: "ðŸ’§",
+        id: "ce1", nombre: "Torrente Jichi", costo: 55, desc: "35 daño. Empapado", categoria: "elemental", emoji: "💧",
         tipo: "Elemental (Agua)",
         carta: { nombre: "Torrente Jichi", costoAP: 2, tipo: "Elemental (Agua)", categoria: "elemental", daño: 35, efecto: "EMPAPADO", valor: 0, cooldown: 2, descripcion: "35 daño. Aplica Empapado." }
     },
     {
-        id: "ce2", nombre: "Llama del Ekeko", costo: 60, desc: "40 daño elemental", categoria: "elemental", emoji: "ðŸ”¥",
+        id: "ce2", nombre: "Llama del Ekeko", costo: 60, desc: "40 daño elemental", categoria: "elemental", emoji: "🔥",
         tipo: "Elemental (Fuego)",
         carta: { nombre: "Llama del Ekeko", costoAP: 2, tipo: "Elemental (Fuego)", categoria: "elemental", daño: 40, efecto: "QUEMADO", valor: 3, cooldown: 2, descripcion: "40 daño. Aplica Quemado." }
     },
-    // â”€â”€â”€ Mejoras â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Mejoras ────────────────────────────────────────────────────────────
     {
-        id: "cm1", nombre: "Coca Ancestral", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "ðŸŒ¿",
+        id: "cm1", nombre: "Coca Ancestral", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "🌿",
         tipo: "Mejora",
         carta: { nombre: "Coca Ancestral", costoAP: 1, tipo: "Mejora", categoria: "mejora", efecto: "AP_BONUS", valor: 2, cooldown: 2, descripcion: "Energía andina. +2 AP este turno." }
     },
     {
-        id: "cm2", nombre: "Brebaje Sabio", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "ðŸ§ª",
+        id: "cm2", nombre: "Brebaje Sabio", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "🧪",
         tipo: "Mejora",
         carta: { nombre: "Brebaje Sabio", costoAP: 1, tipo: "Mejora", categoria: "mejora", efecto: "AP_BONUS", valor: 2, cooldown: 2, descripcion: "Suma +2 AP este turno." }
     },
-    // â”€â”€â”€ Nerfeo / Debilitar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Nerfeo / Debilitar ─────────────────────────────────────────────────
     {
         id: "cn1", nombre: "Mal de Ojo", costo: 40, desc: "Debilita enemigo", categoria: "nerfeo", emoji: "ðŸ‘ï¸",
         tipo: "Nerfeo",
         carta: { nombre: "Mal de Ojo", costoAP: 1, tipo: "Nerfeo", categoria: "nerfeo", efecto: "DEBILITAR", valor: 0, cooldown: 2, descripcion: "Debilita: -5 ATK enemigo." }
     },
     {
-        id: "cn2", nombre: "Susurro del Yatiri", costo: 40, desc: "Silencia 1 turno", categoria: "nerfeo", emoji: "ðŸª¬",
+        id: "cn2", nombre: "Susurro del Yatiri", costo: 40, desc: "Silencia 1 turno", categoria: "nerfeo", emoji: "🪬",
         tipo: "Nerfeo",
         carta: { nombre: "Susurro del Yatiri", costoAP: 1, tipo: "Nerfeo", categoria: "nerfeo", efecto: "DEBILITAR", valor: 5, cooldown: 2, descripcion: "Silencia al enemigo 1 turno." }
     },
-    // â”€â”€â”€ Mejoras ofensivas (upgrade del slot) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Mejoras ofensivas (upgrade del slot) ───────────────────────────────
     {
         id: "co2", nombre: "Golpe Certero", costo: 40, desc: "20 daño físico", categoria: "ofensiva", emoji: "âš”ï¸",
         tipo: "Ofensiva",
         carta: { nombre: "Golpe Certero", costoAP: 1, tipo: "Ofensiva", categoria: "ofensiva", daño: 20, cooldown: 1, descripcion: "Golpe preciso. Daño 20." }
     },
     {
-        id: "cd2", nombre: "Casco Minero", costo: 40, desc: "+35 Escudo", categoria: "defensiva", emoji: "ðŸª–",
+        id: "cd2", nombre: "Casco Minero", costo: 40, desc: "+35 Escudo", categoria: "defensiva", emoji: "🪖",
         tipo: "Defensiva",
         carta: { nombre: "Casco Minero", costoAP: 1, tipo: "Defensiva", categoria: "defensiva", bloqueo: 35, cooldown: 2, descripcion: "Bloqueo reforzado. +35 Escudo." }
     }
 ];
 
 function obtenerCartasTiendaActual() {
-    // Pool completo de cartas â€” se filtra según ranuras bloqueadas del jugador
+    // Pool completo de cartas — se filtra según ranuras bloqueadas del jugador
     // Ranuras null = slot disponible para comprar
     const POOL_CARTAS = [
-        // â”€â”€â”€ Elementales â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ─── Elementales ────────────────────────────────────────────────────────
         {
-            id: "ce1", nombre: "Torrente Jichi", costo: 55, desc: "35 daño. Empapado", categoria: "elemental", emoji: "ðŸ’§",
+            id: "ce1", nombre: "Torrente Jichi", costo: 55, desc: "35 daño. Empapado", categoria: "elemental", emoji: "💧",
             tipo: "Elemental (Agua)",
             carta: { nombre: "Torrente Jichi", costoAP: 2, tipo: "Elemental (Agua)", categoria: "elemental", daño: 35, efecto: "EMPAPADO", valor: 0, cooldown: 2, descripcion: "35 daño. Aplica Empapado." }
         },
         {
-            id: "ce2", nombre: "Llama del Ekeko", costo: 60, desc: "40 daño elemental", categoria: "elemental", emoji: "ðŸ”¥",
+            id: "ce2", nombre: "Llama del Ekeko", costo: 60, desc: "40 daño elemental", categoria: "elemental", emoji: "🔥",
             tipo: "Elemental (Fuego)",
             carta: { nombre: "Llama del Ekeko", costoAP: 2, tipo: "Elemental (Fuego)", categoria: "elemental", daño: 40, efecto: "QUEMADO", valor: 3, cooldown: 2, descripcion: "40 daño. Aplica Quemado." }
         },
-        // â”€â”€â”€ Mejoras â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ─── Mejoras ────────────────────────────────────────────────────────────
         {
-            id: "cm1", nombre: "Coca Ancestral", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "ðŸŒ¿",
+            id: "cm1", nombre: "Coca Ancestral", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "🌿",
             tipo: "Mejora",
             carta: { nombre: "Coca Ancestral", costoAP: 1, tipo: "Mejora", categoria: "mejora", efecto: "AP_BONUS", valor: 2, cooldown: 2, descripcion: "Energía andina. +2 AP este turno." }
         },
         {
-            id: "cm2", nombre: "Brebaje Sabio", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "ðŸ§ª",
+            id: "cm2", nombre: "Brebaje Sabio", costo: 45, desc: "+2 AP este turno", categoria: "mejora", emoji: "🧪",
             tipo: "Mejora",
             carta: { nombre: "Brebaje Sabio", costoAP: 1, tipo: "Mejora", categoria: "mejora", efecto: "AP_BONUS", valor: 2, cooldown: 2, descripcion: "Suma +2 AP este turno." }
         },
-        // â”€â”€â”€ Nerfeo / Debilitar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ─── Nerfeo / Debilitar ─────────────────────────────────────────────────
         {
             id: "cn1", nombre: "Mal de Ojo", costo: 40, desc: "Debilita enemigo", categoria: "nerfeo", emoji: "ðŸ‘ï¸",
             tipo: "Nerfeo",
             carta: { nombre: "Mal de Ojo", costoAP: 1, tipo: "Nerfeo", categoria: "nerfeo", efecto: "DEBILITAR", valor: 0, cooldown: 2, descripcion: "Debilita: -5 ATK enemigo." }
         },
         {
-            id: "cn2", nombre: "Susurro del Yatiri", costo: 40, desc: "Silencia 1 turno", categoria: "nerfeo", emoji: "ðŸª¬",
+            id: "cn2", nombre: "Susurro del Yatiri", costo: 40, desc: "Silencia 1 turno", categoria: "nerfeo", emoji: "🪬",
             tipo: "Nerfeo",
             carta: { nombre: "Susurro del Yatiri", costoAP: 1, tipo: "Nerfeo", categoria: "nerfeo", efecto: "DEBILITAR", valor: 5, cooldown: 2, descripcion: "Silencia al enemigo 1 turno." }
         },
-        // â”€â”€â”€ Mejoras ofensivas (upgrade del slot) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ─── Mejoras ofensivas (upgrade del slot) ───────────────────────────────
         {
             id: "co2", nombre: "Golpe Certero", costo: 40, desc: "20 daño físico", categoria: "ofensiva", emoji: "âš”ï¸",
             tipo: "Ofensiva",
             carta: { nombre: "Golpe Certero", costoAP: 1, tipo: "Ofensiva", categoria: "ofensiva", daño: 20, cooldown: 1, descripcion: "Golpe preciso. Daño 20." }
         },
         {
-            id: "cd2", nombre: "Casco Minero", costo: 40, desc: "+35 Escudo", categoria: "defensiva", emoji: "ðŸª–",
+            id: "cd2", nombre: "Casco Minero", costo: 40, desc: "+35 Escudo", categoria: "defensiva", emoji: "🪖",
             tipo: "Defensiva",
             carta: { nombre: "Casco Minero", costoAP: 1, tipo: "Defensiva", categoria: "defensiva", bloqueo: 35, cooldown: 2, descripcion: "Bloqueo reforzado. +35 Escudo." }
         }
@@ -2079,7 +2079,7 @@ function obtenerCartasTiendaActual() {
     // Solo retornar cartas cuyo slot (categoria) está bloqueado (null) en la mano
     return POOL_CARTAS_TIENDA.filter(c => jugador.mano[c.categoria] === null);
 
-    // â”€â”€ Legacy mapping (mantenido por si algo lo referencia) â”€â”€
+    // ── Legacy mapping (mantenido por si algo lo referencia) ──
     const cartas = {
         1: [
             { id: "c1", nombre: "Golpe Certero", costo: 40, desc: "Ataque 20", categoria: "ofensiva", carta: { nombre: "Golpe Certero", costoAP: 1, tipo: "Ofensiva", categoria: "ofensiva", daño: 20, cooldown: 1, descripcion: "Golpe preciso. Daño 20." }, x: 0, y: 0 },
@@ -2107,7 +2107,7 @@ function obtenerCartasTiendaActual() {
 // Si no existe, se usa EVENTO_YATIRI_FALLBACK.
 const EVENTOS_POR_NODO = {
 
-    // â”€â”€ ACTO 1: AMAZONÍA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 1: AMAZONÍA ────────────────────────────────────────────────────
     "1_3": {
         titulo: "EL MAPINGUARI",
         descripcion: "Un estruendo sacude la selva. Ojos rojos entre las lianas...\nel Mapinguari te observa. El olor a muerte te rodea.\n¿Intentas domarlo o huyes en silencio?",
@@ -2146,7 +2146,7 @@ const EVENTOS_POR_NODO = {
         msgError1: "Necesitas más de 20 HP para la ofrenda"
     },
 
-    // â”€â”€ ACTO 2: VALLES Y MINAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 2: VALLES Y MINAS ───────────────────────────────────────────────
     "2_2": {
         titulo: "EL MINERO PERDIDO",
         descripcion: "Escuchas a un minero pidiendo ayuda bajo unos escombros\nen la oscuridad de la mina.\n¿Decides ayudarlo usando tus fuerzas?",
@@ -2172,7 +2172,7 @@ const EVENTOS_POR_NODO = {
         msgError1: "Necesitas más de 10 HP para la fuerza bruta"
     },
 
-    // â”€â”€ ACTO 3: ALTIPLANO Y SALAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── ACTO 3: ALTIPLANO Y SALAR ────────────────────────────────────────────
     "3_4": {
         titulo: "ESPÍRITU DEL ILLIMANI",
         descripcion: "La nieve eterna del Illimani brilla en la distancia.\nUn espíritu de nieve se manifiesta ante ti.\n¿Ofreces coca o pides su bendición directa?",
@@ -2328,19 +2328,19 @@ const ASSETS = {
         evento_bg_2_6: "img/evento_bg_2_6.webp",
         tienda_bg_2_8: "img/tienda_bg_2_8.webp",
 
-        // Cinemática de transición Acto 1 â†’ 2 (Valles y Minas de Potosí)
+        // Cinemática de transición Acto 1 → 2 (Valles y Minas de Potosí)
         cine_acto2_1: imgCineActo2_1Base64,
         cine_acto2_2: imgCineActo2_2Base64,
         cine_acto2_3: imgCineActo2_3Base64,
 
-        // Cinemática de transición Acto 2 â†’ 3 (Altiplano y Salar de Uyuni)
+        // Cinemática de transición Acto 2 → 3 (Altiplano y Salar de Uyuni)
         cine_acto3_1: imgCineActo3_1Base64,
         cine_acto3_2: imgCineActo3_2Base64
     },
 
     // Sprites de personajes y enemigos
     personajes: {
-        // Mamani â€” sprites de animación
+        // Mamani — sprites de animación
         yatiriPortrait: "img/yatiri_portrait.webp",
         mamani: "img/mamani.webp",
         mamaniOfensivo: "img/mamani_offensive.webp",
@@ -2349,7 +2349,7 @@ const ASSETS = {
         mamaniBuff: "img/mamani_buff.webp",
         mamaniDebuff: "img/mamani_debuff.webp",
         mamaniElemental: "img/mamani_elemental.webp",
-        // Quirquincho â€” sprites de animación
+        // Quirquincho — sprites de animación
         quirquincho: "img/quirquincho.webp",
         quirquinchoAtaque: "img/quirquincho_attack.webp",
         quirquinchoDefensivo: "img/quirquincho_defensive.webp",
@@ -2404,19 +2404,19 @@ const ASSETS = {
         tioDefensa: "img/tio_defensa.webp?v=3",
         tioMuerte: "img/tio_muerte.webp?v=3",
         huiracocha: imgHuiracochaBase64,
-        // Karikari â€” sprites de animación
+        // Karikari — sprites de animación
         karikari: imgKarikariBase64,
         karikariAtaque: "img/karikari_attack.webp",
         karikariHerido: "img/karikari_hurt.webp",
         karikariDefensa: "img/karikari_defense.webp",
         karikariMuerte: "img/karikari_death.webp",
-        // El Jukumari â€” sprites de animación
+        // El Jukumari — sprites de animación
         jukumari: "img/jukumari.webp",
         jukumariAtaque: "img/jukumari_attack.webp",
         jukumariHerido: "img/jukumari_hurt.webp",
         jukumariDefensa: "img/jukumari_defense.webp",
         jukumariMuerte: "img/jukumari_death.webp",
-        // La Viuda â€” sprites de animación
+        // La Viuda — sprites de animación
         viuda: "img/viuda.webp",
         viudaAtaque: "img/viuda_attack.webp",
         viudaHerida: "img/viuda_hurt.webp",
@@ -2566,7 +2566,7 @@ function gameLoop() {
         }
     }
 
-    // â”€â”€ Sincronizar música con el estado actual â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Sincronizar música con el estado actual ──────────────────────────
     sistemaAudio.reproducirMusica(estadoActual);
 
     // Evaluamos en qué pantalla estamos y dibujamos en consecuencia
@@ -2640,7 +2640,7 @@ function dibujarPantallaMenu() {
 }
 
 /* ==========================================================================
-   CUTSCENE â€” Pantalla de Historia Narrativa
+   CUTSCENE — Pantalla de Historia Narrativa
    ========================================================================== */
 function dibujarCutscene() {
     const ahora = performance.now();
@@ -2649,7 +2649,7 @@ function dibujarCutscene() {
 
     const slide = CUTSCENE_SLIDES[cutsceneSlideActual];
 
-    // â”€â”€ FONDO CON IMAGEN DE CINEMÁTICA / DEGRADADO FALLBACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── FONDO CON IMAGEN DE CINEMÁTICA / DEGRADADO FALLBACK ──────────────
     const imgCine = imagenesCargadas.fondos && imagenesCargadas.fondos[slide.imgKey];
     if (imgCine && imgCine.complete && imgCine.naturalWidth !== 0) {
         ctx.drawImage(imgCine, 0, 0, 480, 270);
@@ -2661,7 +2661,7 @@ function dibujarCutscene() {
         ctx.fillRect(0, 0, 480, 270);
     }
 
-    // Partículas de fondo (estrellitas/polvo) â€” solo si no hay imagen activa
+    // Partículas de fondo (estrellitas/polvo) — solo si no hay imagen activa
     ctx.fillStyle = imgCine && imgCine.complete && imgCine.naturalWidth !== 0
         ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.12)";
     const seed = cutsceneSlideActual * 137;
@@ -2674,19 +2674,19 @@ function dibujarCutscene() {
         ctx.fill();
     }
 
-    // â”€â”€ BARRA SUPERIOR E INFERIOR (Estilo cinemático) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── BARRA SUPERIOR E INFERIOR (Estilo cinemático) ──────────────────
     ctx.fillStyle = "rgba(0,0,0,0.75)";
     ctx.fillRect(0, 0, 480, 45);      // Barra superior
     ctx.fillRect(0, 225, 480, 45);    // Barra inferior
 
-    // â”€â”€ NÃšMERO DE SLIDE (esquina superior derecha) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── NÃšMERO DE SLIDE (esquina superior derecha) ──────────────────────
     ctx.fillStyle = "rgba(255,255,255,0.3)";
     ctx.font = "4px 'Press Start 2P'";
     ctx.textAlign = "right";
     ctx.fillText((cutsceneSlideActual + 1) + " / " + CUTSCENE_SLIDES.length, 472, 12);
     ctx.textAlign = "left";
 
-    // â”€â”€ LÍNEA DECORATIVA COLOREADA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── LÍNEA DECORATIVA COLOREADA ───────────────────────────────────────
     ctx.strokeStyle = slide.acento;
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -2694,9 +2694,9 @@ function dibujarCutscene() {
     ctx.lineTo(460, 44);
     ctx.stroke();
 
-    // â”€â”€ Sombra de texto para legibilidad sobre imágenes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Sombra de texto para legibilidad sobre imágenes ──────────────────
 
-    // â”€â”€ TYPEWRITER: TÍTULO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── TYPEWRITER: TÍTULO ──────────────────────────────────────────────
     if (cutsceneTituloIndex < slide.titulo.length) {
         cutsceneTimer += delta;
         if (cutsceneTimer >= TYPEWRITER_VELOCIDAD) {
@@ -2719,7 +2719,7 @@ function dibujarCutscene() {
     ctx.fillText(tituloVisible, 240, 28);
     ctx.textAlign = "left";
 
-    // â”€â”€ TYPEWRITER: TEXTO NARRATIVO (con salto de línea automático y contorno) â”€â”€â”€â”€â”€
+    // ── TYPEWRITER: TEXTO NARRATIVO (con salto de línea automático y contorno) ─────
     const textoVisible = slide.texto.substring(0, cutsceneCharIndex);
     ctx.font = "5.5px 'Press Start 2P'";
 
@@ -2753,7 +2753,7 @@ function dibujarCutscene() {
         ctx.fillText(linea, 24, 75 + (i * 18));
     });
 
-    // â”€â”€ CURSOR PARPADEANTE (mientras escribe) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── CURSOR PARPADEANTE (mientras escribe) ───────────────────────────
     if (cutsceneCharIndex < slide.texto.length) {
         const cursorVisible = Math.floor(ahora / 400) % 2 === 0;
         if (cursorVisible && lineas.length > 0) {
@@ -2764,26 +2764,26 @@ function dibujarCutscene() {
         }
     }
 
-    // â”€â”€ INDICADOR "TOCA PARA CONTINUAR" (solo cuando terminó el texto) â”€â”€
+    // ── INDICADOR "TOCA PARA CONTINUAR" (solo cuando terminó el texto) ──
     if (cutsceneCharIndex >= slide.texto.length && cutsceneTituloIndex >= slide.titulo.length) {
         const parpadeo = Math.floor(ahora / 500) % 2 === 0;
         if (parpadeo) {
             ctx.fillStyle = slide.acento;
             ctx.font = "4.5px 'Press Start 2P'";
             ctx.textAlign = "center";
-            ctx.fillText("â–¶  TOCA PARA CONTINUAR", 240, 240);
+            ctx.fillText("▶  TOCA PARA CONTINUAR", 240, 240);
             ctx.textAlign = "left";
         }
     }
 
-    // â”€â”€ NOMBRE DEL JUEGO (esquina inferior izquierda) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ // Restaurar sombra
+    // ── NOMBRE DEL JUEGO (esquina inferior izquierda) ─────────────────── // Restaurar sombra
     ctx.fillStyle = "rgba(255,255,255,0.2)";
     ctx.font = "3.5px 'Press Start 2P'";
     ctx.fillText("LA SENDA DE MAMANI", 20, 260);
 }
 
 /* ==========================================================================
-   TUTORIAL COMPLETO â€” Pantalla de felicitación in-canvas
+   TUTORIAL COMPLETO — Pantalla de felicitación in-canvas
    ========================================================================== */
 function dibujarTutorialCompleto() {
     // Fondo oscuro elegante
@@ -2810,7 +2810,7 @@ function dibujarTutorialCompleto() {
     ctx.fillStyle = "#f1c40f";
     ctx.font = "28px serif";
     ctx.textAlign = "center";
-    ctx.fillText("â˜…", 240, 70);
+    ctx.fillText("★", 240, 70);
     ctx.restore();
 
     // Título principal
@@ -2847,7 +2847,7 @@ function dibujarTutorialCompleto() {
 }
 
 /* ==========================================================================
-   TUTORIAL â€” Combate interactivo guiado
+   TUTORIAL — Combate interactivo guiado
    ========================================================================== */
 function dibujarTutorial() {
     // El tutorial usa la pantalla de combate como base
@@ -2858,7 +2858,7 @@ function dibujarTutorial() {
 
     const ahora = performance.now();
 
-    // â”€â”€ OVERLAY SEMITRANSPARENTE Y SPOTLIGHT (Rendimiento optimizado) â”€â”€â”€â”€â”€
+    // ── OVERLAY SEMITRANSPARENTE Y SPOTLIGHT (Rendimiento optimizado) ─────
     let sp = null;
     let lineasVisuales = paso.lineas;
 
@@ -2893,7 +2893,7 @@ function dibujarTutorial() {
         ctx.fill("evenodd");
     }
 
-    // â”€â”€ EFECTOS VISUALES DEL SPOTLIGHT (Solo si existe) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── EFECTOS VISUALES DEL SPOTLIGHT (Solo si existe) ───────────────────
     if (sp) {
         ctx.strokeStyle = paso.color || "#ffcc00";
         ctx.lineWidth = 2;
@@ -2913,11 +2913,11 @@ function dibujarTutorial() {
         ctx.fill();
     }
 
-    // â”€â”€ LÃ“GICA DE AUTO-AVANCE PARA INFO Y MISION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // â”€â”€ ELIMINADO: AUTO-AVANCE PARA INFO Y MISION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── LÃ“GICA DE AUTO-AVANCE PARA INFO Y MISION ─────────────────────────
+    // ── ELIMINADO: AUTO-AVANCE PARA INFO Y MISION ─────────────────────────
     // El usuario avanzará haciendo clic en su lugar.
 
-    // â”€â”€ DIBUJAR PANELES SEGÃšN EL TIPO DE PASO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── DIBUJAR PANELES SEGÃšN EL TIPO DE PASO ─────────────────────────────
     if (paso.tipo === "INFO" || paso.tipo === "MISION") {
         // Panel Central Grande
         const panelW = 340;
@@ -3128,7 +3128,7 @@ function dibujarPantallaMapa() {
         colorBioma = "#9b59b6";
     }
 
-    // â”€â”€ TUTORIAL DEL MAPA (ACTO 0) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── TUTORIAL DEL MAPA (ACTO 0) ────────────────────────────────────
     if (actoActual === 0) {
         if (nodosMapa[1] && !nodosMapa[1].completado) {
             if (mapaTutorialPaso < 0) mapaTutorialPaso = 0;
@@ -3164,7 +3164,7 @@ function dibujarPantallaMapa() {
                 const nodoCombate = nodosMapa[1];
                 ctx.fillStyle = "#f1c40f";
                 ctx.font = "6px 'Press Start 2P'";
-                ctx.fillText("â–¼", nodoCombate.x - 4, nodoCombate.y - 15);
+                ctx.fillText("▼", nodoCombate.x - 4, nodoCombate.y - 15);
             }
         } else if (nodosMapa[2] && !nodosMapa[2].completado) {
             // Tienda tutorial
@@ -3194,7 +3194,7 @@ function dibujarPantallaMapa() {
                 const nodoTienda = nodosMapa[2];
                 ctx.fillStyle = "#f1c40f";
                 ctx.font = "6px 'Press Start 2P'";
-                ctx.fillText("â–¼", nodoTienda.x - 4, nodoTienda.y - 15);
+                ctx.fillText("▼", nodoTienda.x - 4, nodoTienda.y - 15);
             }
         } else if (nodosMapa[5] && !nodosMapa[5].completado) {
             if ((nodosMapa[3] && nodosMapa[3].completado) || (nodosMapa[4] && nodosMapa[4].completado)) {
@@ -3226,7 +3226,7 @@ function dibujarPantallaMapa() {
                     const nodoJefe = nodosMapa[5];
                     ctx.fillStyle = "#f1c40f";
                     ctx.font = "6px 'Press Start 2P'";
-                    ctx.fillText("â–¼", nodoJefe.x - 4, nodoJefe.y - 15);
+                    ctx.fillText("▼", nodoJefe.x - 4, nodoJefe.y - 15);
                 }
             } else {
                 if (mapaTutorialPaso < 5) mapaTutorialPaso = 5;
@@ -3278,8 +3278,8 @@ function dibujarPantallaMapa() {
                     const nodoEvento = nodosMapa[4];
                     ctx.fillStyle = "#f1c40f";
                     ctx.font = "6px 'Press Start 2P'";
-                    ctx.fillText("â–¼", nodoCamp.x - 4, nodoCamp.y - 15);
-                    ctx.fillText("â–¼", nodoEvento.x - 4, nodoEvento.y - 15);
+                    ctx.fillText("▼", nodoCamp.x - 4, nodoCamp.y - 15);
+                    ctx.fillText("▼", nodoEvento.x - 4, nodoEvento.y - 15);
                 }
             }
         }
@@ -3943,7 +3943,7 @@ function dibujarPantallaCombate() {
     } else {
         gradTele.addColorStop(0, "#9b59b6");
         gradTele.addColorStop(1, "#8e44ad");
-        iconoIntencion = "ðŸ’€";
+        iconoIntencion = "💀";
     }
     ctx.fillStyle = gradTele;
     ctx.beginPath();
@@ -4069,7 +4069,7 @@ function dibujarPantallaCombate() {
     ctx.fillText("TURNO", btnTerminar.x + 16, ty + 17);
 
     // ==========================================
-    // 8. MANO DE CARTAS â€” LAYOUT PLANO HORIZONTAL CENTRADO
+    // 8. MANO DE CARTAS — LAYOUT PLANO HORIZONTAL CENTRADO
     // ==========================================
     const categorias = ["ofensiva", "defensiva", "elemental", "mejora", "nerfeo"];
     const cfgMano = UI_CONFIG.mano;
@@ -4116,7 +4116,7 @@ function dibujarPantallaCombate() {
         }
 
         if (carta === null) {
-            // â”€â”€ Ranura bloqueada (estética premium) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+            // ── Ranura bloqueada (estética premium) ──────────────────
             // Fondo muy oscuro con gradiente
             const gLocked = ctx.createLinearGradient(cx, cyBase, cx, cyBase + cartaAlto);
             gLocked.addColorStop(0, "rgba(12,8,3,0.88)");
@@ -4135,7 +4135,7 @@ function dibujarPantallaCombate() {
             ctx.font = "16px serif";
             ctx.textAlign = "center";
             ctx.globalAlpha = 0.45;
-            ctx.fillText("ðŸ”’", cx + cartaAncho / 2, cyBase + cartaAlto / 2 - 4);
+            ctx.fillText("🔒", cx + cartaAncho / 2, cyBase + cartaAlto / 2 - 4);
             ctx.globalAlpha = 1;
 
             // Texto "TIENDA" pequeño debajo
@@ -4264,13 +4264,13 @@ function dibujarPantallaCombate() {
             ctx.fillText(carta.costoAP, gemaX, gemaY + 1.5);
             ctx.textAlign = "left";
 
-            // Indicador "â–¼ JUGAR" encima de la carta seleccionada (pulso suave)
+            // Indicador "▼ JUGAR" encima de la carta seleccionada (pulso suave)
             if (estaSeleccionada) {
                 const alfaLabel = 0.7 + pulsoSel * 0.3; // 0.7 a 1.0
                 ctx.fillStyle = `rgba(255, 220, 0, ${alfaLabel})`;
                 ctx.font = "3.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText("â–¼ JUGAR", cx + cartaAncho / 2, cy - 3);
+                ctx.fillText("▼ JUGAR", cx + cartaAncho / 2, cy - 3);
                 ctx.textAlign = "left";
             }
 
@@ -4370,7 +4370,7 @@ function dibujarPantallaCombate() {
     dibujarInventario();
 }
 function dibujarPantallaVictoria() {
-    // â”€â”€ Fondo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Fondo ────────────────────────────────────────────────────────
     const grad = ctx.createLinearGradient(0, 0, 0, 270);
     grad.addColorStop(0, "#0d1f0d");
     grad.addColorStop(0.5, "#1a2e1a");
@@ -4392,15 +4392,15 @@ function dibujarPantallaVictoria() {
         ctx.fillRect(p[0], p[1], size, size);
     });
 
-    // â”€â”€ Corona / Trofeo decorativo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Corona / Trofeo decorativo ────────────────────────────────────
     ctx.save();
     ctx.textAlign = "center";
     ctx.font = "30px serif";
     ctx.fillStyle = "#f1c40f";
-    ctx.fillText("ðŸ‘‘", 240, 68);
+    ctx.fillText("👑", 240, 68);
     ctx.restore();
 
-    // â”€â”€ Título â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Título ────────────────────────────────────────────────────────
     ctx.textAlign = "center";
     ctx.fillStyle = "#ffdd00";
     ctx.font = "11px 'Press Start 2P'";
@@ -4414,7 +4414,7 @@ function dibujarPantallaVictoria() {
     ctx.lineTo(380, 112);
     ctx.stroke();
 
-    // â”€â”€ Nombre del enemigo derrotado â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Nombre del enemigo derrotado ──────────────────────────────────
     ctx.fillStyle = "#e0e0e0";
     ctx.font = "5.5px 'Press Start 2P'";
     ctx.fillText("Has derrotado a:", 240, 130);
@@ -4423,7 +4423,7 @@ function dibujarPantallaVictoria() {
     ctx.font = "7px 'Press Start 2P'";
     ctx.fillText(nombreEnemigoVencido, 240, 148);
 
-    // â”€â”€ Recompensas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Recompensas ───────────────────────────────────────────────────
     ctx.fillStyle = "#a8d8a8";
     ctx.font = "5px 'Press Start 2P'";
     ctx.fillText("La Pachamama te recompensa...", 240, 175);
@@ -4432,11 +4432,11 @@ function dibujarPantallaVictoria() {
     ctx.font = "4px 'Press Start 2P'";
     ctx.fillText("Podrás elegir una carta para tu mazo", 240, 190);
 
-    // â”€â”€ Botón continuar (parpadeo) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Botón continuar (parpadeo) ────────────────────────────────────
     if (Math.floor(t * 2) % 2 === 0) {
         ctx.fillStyle = "#ffcc00";
         ctx.font = "5px 'Press Start 2P'";
-        ctx.fillText("â€” Haz clic para continuar â€”", 240, 240);
+        ctx.fillText("— Haz clic para continuar —", 240, 240);
     }
 
     ctx.textAlign = "left";
@@ -4445,7 +4445,7 @@ function dibujarPantallaRecompensa() {
     // Indicar si hay algún botón en hover para cambiar el cursor
     let hoverBotonGeneral = false;
 
-    // â”€â”€ Fondo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Fondo ────────────────────────────────────────────────────────
     const grad = ctx.createLinearGradient(0, 0, 0, 270);
     grad.addColorStop(0, "#081c15"); // Verde profundo
     grad.addColorStop(0.5, "#1b4332"); // Verde bosque
@@ -4467,15 +4467,15 @@ function dibujarPantallaRecompensa() {
         ctx.fillRect(p[0], p[1], size, size);
     });
 
-    // ðŸ‘‘ Corona / Trofeo decorativo ðŸ‘‘
+    // 👑 Corona / Trofeo decorativo 👑
     ctx.save();
     ctx.textAlign = "center";
     ctx.font = "28px serif";
     ctx.fillStyle = "#f1c40f";
-    ctx.fillText("ðŸ‘‘", 240, 35);
+    ctx.fillText("👑", 240, 35);
     ctx.restore();
 
-    // â”€â”€ Título â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Título ────────────────────────────────────────────────────────
     ctx.textAlign = "center";
     ctx.fillStyle = esRecompensaJefe ? "#f1c40f" : "#ffdd00";
     ctx.font = "10px 'Press Start 2P'";
@@ -4489,7 +4489,7 @@ function dibujarPantallaRecompensa() {
     ctx.lineTo(380, 65);
     ctx.stroke();
 
-    // â”€â”€ Nombre del enemigo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Nombre del enemigo ──────────────────────────────────────────
     ctx.fillStyle = "#e0e0e0";
     ctx.font = "5px 'Press Start 2P'";
     ctx.fillText("Has derrotado a:", 240, 80);
@@ -4498,13 +4498,13 @@ function dibujarPantallaRecompensa() {
     ctx.font = "7px 'Press Start 2P'";
     ctx.fillText(nombreEnemigoVencido, 240, 93);
 
-    // â”€â”€ Recompensas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Recompensas ───────────────────────────────────────────────────
     ctx.fillStyle = "#f39c12";
     ctx.font = "6px 'Press Start 2P'";
     ctx.fillText("\uD83D\uDCB0 Oro obtenido: +" + oroRecompensa + "G", 240, 110);
 
     if (esRecompensaJefe && reliquiaJefeObtenida) {
-        // â”€â”€ Panel de reliquia de jefe â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── Panel de reliquia de jefe ─────────
         const rx = 100, ry = 120, rw = 280, rh = 74;
         const gReliq = ctx.createLinearGradient(rx, ry, rx, ry + rh);
         gReliq.addColorStop(0, "rgba(80,50,0,0.95)");
@@ -4548,7 +4548,7 @@ function dibujarPantallaRecompensa() {
 
     const cfgR = UI_CONFIG.recompensa;
 
-    // â”€â”€ Botón Continuar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Botón Continuar ──────────────────────────────────────────────────
     const btnOmitir = cfgR.omitir;
     btnOmitir.x = 240 - (btnOmitir.w / 2); // Centrar el botón
     btnOmitir.y = esRecompensaJefe ? 205 : 165; // Más abajo si hay reliquia
@@ -4589,7 +4589,7 @@ function dibujarPantallaRecompensa() {
 function dibujarPantallaTienda() {
     let hoverBotonGeneral = false;
 
-    // â”€â”€ FONDO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── FONDO ──────────────────────────────────────────────────────────
     const nodoTienda = nodosMapa[nodoActualIndex];
     const datosTienda = {
         1: {
@@ -4619,7 +4619,7 @@ function dibujarPantallaTienda() {
         ctx.beginPath(); ctx.arc(sx, sy, si % 3 === 0 ? 1.5 : 1, 0, Math.PI * 2); ctx.fill();
     });
 
-    // â”€â”€ TOP: ORO | TÍTULO | SALIR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── TOP: ORO | TÍTULO | SALIR ───────────────────────────────────────
     ctx.fillStyle = "#f1c40f"; ctx.font = "5px 'Press Start 2P'"; ctx.textAlign = "left";
     ctx.fillText("\uD83D\uDCB0 " + jugador.oro + "G", 8, 13);
 
@@ -4635,7 +4635,7 @@ function dibujarPantallaTienda() {
     ctx.fillStyle = "#fff"; ctx.font = "5px 'Press Start 2P'"; ctx.textAlign = "center";
     ctx.fillText("SALIR", btnV.x + btnV.w / 2, btnV.y + 12);
 
-    // â”€â”€ PESTAÃ‘AS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── PESTAÃ‘AS ────────────────────────────────────────────────────────
     ctx.textAlign = "left";
     UI_CONFIG.tienda.tabs.forEach(tab => {
         const isSel = (pestanaTiendaActual === tab.id);
@@ -4652,7 +4652,7 @@ function dibujarPantallaTienda() {
     });
     ctx.textAlign = "left";
 
-    // â”€â”€ CONTENIDO: PASIVAS (2x2 grid de buffs por niveles) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── CONTENIDO: PASIVAS (2x2 grid de buffs por niveles) ──────────────
     if (pestanaTiendaActual === 'pasivas') {
         const BL = [{ x: 12, y: 48 }, { x: 250, y: 48 }, { x: 12, y: 132 }, { x: 250, y: 132 }];
         const BW = 210, BH = 74;
@@ -4685,7 +4685,7 @@ function dibujarPantallaTienda() {
             // Estrellas de nivel
             for (let s = 0; s < maxNv; s++) {
                 ctx.fillStyle = s < nv ? buff.color : "#2a1808"; ctx.font = "11px serif";
-                ctx.fillText("â˜…", bx + 30 + s * 15, by + 33);
+                ctx.fillText("★", bx + 30 + s * 15, by + 33);
             }
             // Nivel texto
             ctx.fillStyle = "#a07030"; ctx.font = "3.5px 'Press Start 2P'";
@@ -4711,7 +4711,7 @@ function dibujarPantallaTienda() {
         });
 
     } else {
-        // â”€â”€ CONTENIDO: OBJETOS / MAZO (4 cartas estilo Andino) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── CONTENIDO: OBJETOS / MAZO (4 cartas estilo Andino) ──────────
         const items = itemsTiendaActuales[pestanaTiendaActual] || [];
         const CW = 100, CH = 148, GAP = 12;
         const startX = Math.floor((480 - (4 * CW + 3 * GAP)) / 2);  // = 22
@@ -4790,7 +4790,7 @@ function dibujarPantallaTienda() {
                     ctx.drawImage(imgItem, cx + CW / 2 - 28, cy + 6, 56, 56);
                 } else {
                     ctx.font = "24px serif";
-                    ctx.fillText(item.emoji || (item.carta ? "ðŸƒ" : "âœ¨"), cx + CW / 2, cy + 37);
+                    ctx.fillText(item.emoji || (item.carta ? "ðŸƒ" : "✨"), cx + CW / 2, cy + 37);
                 }
 
                 // Nombre de la carta
@@ -4822,7 +4822,7 @@ function dibujarPantallaTienda() {
         }
     }
 
-    // â”€â”€ BOTONES INFERIORES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── BOTONES INFERIORES ────────────────────────────────────────────────
 
     // CAMBIAR (solo objetos y mazo)
     if (pestanaTiendaActual !== 'pasivas') {
@@ -4865,7 +4865,7 @@ function dibujarPantallaTienda() {
     ctx.fillText(lblComp, bComprar.x + bComprar.w / 2, bComprar.y + 16);
     ctx.textAlign = "left";
 
-    // â”€â”€ TUTORIAL DE LA TIENDA (ACTO 0) â”€â”€
+    // ── TUTORIAL DE LA TIENDA (ACTO 0) ──
     if (actoActual === 0 && !tiendaTutorialCompletado) {
         if (tiendaTutorialPaso === 0 || tiendaTutorialPaso === 4) {
             ctx.fillStyle = "rgba(0, 0, 0, 0.85)";
@@ -4939,7 +4939,7 @@ function dibujarPantallaEvento() {
     let hoverBotonGeneral = false;
     const ahora = performance.now();
 
-    // â”€â”€ 1. Fondo Místico Andino (Dinámico según el nodo del Acto 1) â”€â”€
+    // ── 1. Fondo Místico Andino (Dinámico según el nodo del Acto 1) ──
     const claveFondoActo = `evento_bg_${actoActual}_${nodoActualIndex}`;
     const claveFondoOriginal = `evento_bg_${nodoActualIndex}`;
     const fondoEvento = imagenesCargadas.fondos && (imagenesCargadas.fondos[claveFondoActo] || imagenesCargadas.fondos[claveFondoOriginal] || imagenesCargadas.fondos.evento);
@@ -5000,7 +5000,7 @@ function dibujarPantallaEvento() {
         }
     });
 
-    // â”€â”€ 2. Dibujo Artístico del Yatiri / Sahumerio (SOLO si NO hay fondo de imagen activo) â”€â”€
+    // ── 2. Dibujo Artístico del Yatiri / Sahumerio (SOLO si NO hay fondo de imagen activo) ──
     if (!tieneFondoImagen) {
         // Mesa de ofrenda (sahumerio)
         ctx.fillStyle = "#3e2723"; // Madera marrón
@@ -5058,11 +5058,11 @@ function dibujarPantallaEvento() {
         ctx.fill();
     }
 
-    // â”€â”€ 3. Obtener datos del evento según nodo actual â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── 3. Obtener datos del evento según nodo actual ──────────────────
     const claveEvento = `${actoActual}_${nodoActualIndex}`;
     const eventoActual = EVENTOS_POR_NODO[claveEvento] || EVENTO_YATIRI_FALLBACK;
 
-    // â”€â”€ 4. Panel de Narrativa en el lateral izquierdo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── 4. Panel de Narrativa en el lateral izquierdo ───────────────────
     // Deja el lateral derecho (x > 225) totalmente libre para ver el fondo pixel art completo
     const px = 15, py = 15;
     const pw = 210, ph = 240;
@@ -5140,7 +5140,7 @@ function dibujarPantallaEvento() {
     ctx.lineTo(px + pw - 12, 146);
     ctx.stroke();
 
-    // â”€â”€ 5. Botones de Opciones apilados en el panel izquierdo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── 5. Botones de Opciones apilados en el panel izquierdo ──────────────
     const w = UI_CONFIG.evento.opcionAncho;
     const h = UI_CONFIG.evento.opcionAlto;
     eventoActual.opciones.forEach((opcion, idx) => {
@@ -5168,12 +5168,12 @@ function dibujarPantallaEvento() {
         ctx.restore();
 
         // Icono contextual según opción
-        let icono = "ðŸŒ¿";
+        let icono = "🌿";
         const txtLower = opcion.texto.toLowerCase();
         if (txtLower.includes("huir")) icono = "ðŸƒ";
         else if (txtLower.includes("domar")) icono = "ðŸ¯";
-        else if (txtLower.includes("beber")) icono = "ðŸ’§";
-        else if (txtLower.includes("ofrenda")) icono = "ðŸª™";
+        else if (txtLower.includes("beber")) icono = "💧";
+        else if (txtLower.includes("ofrenda")) icono = "🪙";
         else if (txtLower.includes("rezar")) icono = "ðŸ™";
         else if (idx === 1) icono = "â›°ï¸";
 
@@ -5389,13 +5389,13 @@ function iniciarViaje() {
     jugador.escudo = 0;
 
     if (tutorialCompletado) {
-        // Ya vio el tutorial en esta sesión â†’ saltar directo al Acto 1
+        // Ya vio el tutorial en esta sesión → saltar directo al Acto 1
         document.getElementById('hud-ui').style.display = 'flex';
         actoActual = 1;
         reiniciarMapaParaNuevoActo();
         estadoActual = ESTADOS.MAPA;
     } else {
-        // Primera vez en esta sesión â†’ cutscene de intro â†’ tutorial (Acto 0)
+        // Primera vez en esta sesión → cutscene de intro → tutorial (Acto 0)
         document.getElementById('hud-ui').style.display = 'none';
         iniciarCinematicaTransicion(CUTSCENE_SLIDES, function () {
             iniciarTutorial();
@@ -5888,7 +5888,7 @@ function abrirStats() {
     const container = document.getElementById('stats-container');
     container.innerHTML = `
                 <div><span style="color:#e74c3c">❤ Vitalidad:</span> Nivel ${jugador.pasivas.vitalidad}</div>
-                <div><span style="color:#f1c40f">âš¡ Energía:</span> Nivel ${jugador.pasivas.energia}</div>
+                <div><span style="color:#f1c40f">⚡ Energía:</span> Nivel ${jugador.pasivas.energia}</div>
                 <div><span style="color:#3498db">ðŸ›¡ï¸ Defensa:</span> Nivel ${jugador.pasivas.defensa}</div>
                 <div><span style="color:#e67e22">âš”ï¸ Fuerza:</span> Nivel ${jugador.pasivas.fuerza}</div>
             `;
@@ -6214,7 +6214,7 @@ function usarItem(index) {
     // Pequeña animación visual del jugador al usar ítem
     activarAnimacion('jugador', 'ataque', { cat: 'mejora' });
 
-    // â”€â”€ CURACIÃ“N DE VIDA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── CURACIÃ“N DE VIDA ──────────────────────────────────────────────────
     if (["saltena", "majadito", "chicha", "api", "lluchu", "locoto", "quinua"].includes(item.id)) {
         const cura = { saltena: 25, majadito: 25, chicha: 30, api: 25, lluchu: 35, locoto: 30, quinua: 35 }[item.id] || 25;
         jugador.hp = Math.min(jugador.hpMax, jugador.hp + cura);
@@ -6225,13 +6225,13 @@ function usarItem(index) {
         jugador.hp = Math.min(jugador.hpMax, jugador.hp + cura);
         animaciones.textosFlotantes.push({ x: 80, y: 100, texto: `+${cura} HP`, color: "#2ecc71", vida: 60, maxVida: 60 });
 
-        // â”€â”€ ESCUDO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── ESCUDO ────────────────────────────────────────────────────────────
     } else if (["bicarbonato", "copaiba", "aceiteselva", "plata", "cuero", "hoja", "aymara", "sal"].includes(item.id)) {
         const escudoVal = { bicarbonato: 15, copaiba: 15, aceiteselva: 15, plata: 20, cuero: 18, hoja: 25, aymara: 22, sal: 28 }[item.id] || 15;
         jugador.escudo += escudoVal;
         animaciones.textosFlotantes.push({ x: 80, y: 100, texto: `+${escudoVal} Escudo`, color: "#3498db", vida: 60, maxVida: 60 });
 
-        // â”€â”€ DAÃ‘O AL ENEMIGO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── DAÃ‘O AL ENEMIGO ───────────────────────────────────────────────────
     } else if (["cerbatana", "honda", "boleadora", "suri", "hacha"].includes(item.id)) {
         sistemaAudio.sfx('danoEnemigo');
         const danoVal = { cerbatana: 35, honda: 40, boleadora: 45, suri: 42, hacha: 50 }[item.id] || 35;
@@ -6243,7 +6243,7 @@ function usarItem(index) {
         enemigo.hp = Math.max(0, enemigo.hp - 38);
         activarAnimacion('enemigo', 'dano', { texto: '-38' });
 
-        // â”€â”€ CURA DE ESTADOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── CURA DE ESTADOS ───────────────────────────────────────────────────
     } else if (["alcohol", "unadegato", "resinaselva", "menta", "salvia", "incienso", "koa", "palo"].includes(item.id)) {
         jugador.estado = null;
         animaciones.textosFlotantes.push({ x: 80, y: 100, texto: "Purificado", color: "#1abc9c", vida: 60, maxVida: 60 });
@@ -6385,7 +6385,7 @@ function jugarCarta(categoria) {
         jugador.cooldowns[carta.nombre] = carta.cooldown;
     }
 
-    // â”€â”€ AVANCE DEL TUTORIAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── AVANCE DEL TUTORIAL ────────────────────────────────────────────────
     if (enModoTutorial) {
         const paso = TUTORIAL_PASOS[tutorialPasoActual];
         if (paso && paso.accion === "JUGAR_OFENSIVA" && categoria === "ofensiva") {
@@ -6506,7 +6506,7 @@ function regresarAlMapaTrasCombate() {
         // Oro de jefe: entre 60G y 100G (más generoso)
         oroRecompensa = Math.floor(Math.random() * 41) + 60;
 
-        // â”€â”€ Reliquia de Jefe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── Reliquia de Jefe ─────────────────────
         let reliquia = actoActual === 1 ? RELIQUIAS_JEFE.acto1
             : actoActual === 2 ? RELIQUIAS_JEFE.acto2
                 : RELIQUIAS_JEFE.acto3;
@@ -6586,7 +6586,7 @@ function avanzarSiguienteActo() {
     }
 
     if (actoActual === 2) {
-        // Mostrar cinemática de transición Acto 1 â†’ 2 (Valles y Minas)
+        // Mostrar cinemática de transición Acto 1 → 2 (Valles y Minas)
         iniciarCinematicaTransicion(CUTSCENE_SLIDES_ACTO2, function () {
             reiniciarMapaParaNuevoActo();
         });
@@ -6594,7 +6594,7 @@ function avanzarSiguienteActo() {
     }
 
     if (actoActual === 3) {
-        // Cinemática de transición Acto 2 â†’ 3 (Altiplano y Salar de Uyuni)
+        // Cinemática de transición Acto 2 → 3 (Altiplano y Salar de Uyuni)
         iniciarCinematicaTransicion(CUTSCENE_SLIDES_ACTO3, function () {
             reiniciarMapaParaNuevoActo();
         });
@@ -6635,7 +6635,7 @@ function reiniciarMapaParaNuevoActo() {
 // Ejecuta la acción del enemigo y reinicia el turno de Mamani
 function terminarTurno() {
 
-    // â”€â”€ AVANCE DEL TUTORIAL (paso 3: terminar turno) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── AVANCE DEL TUTORIAL (paso 3: terminar turno) ────────────────────
     if (enModoTutorial) {
         const paso = TUTORIAL_PASOS[tutorialPasoActual];
         if (paso && paso.accion === "TERMINAR_TURNO") {
@@ -6809,7 +6809,7 @@ canvas.addEventListener('pointerdown', (e) => {
     const clickY = (e.clientY - rect.top) * (270 / rect.height);
 
 
-    // â”€â”€ Clic en Botón Mute (Siempre disponible fuera del menú) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Clic en Botón Mute (Siempre disponible fuera del menú) ──────────
     if (estadoActual !== ESTADOS.MENU) {
         if (clickX >= MUTE_BTN.x && clickX <= MUTE_BTN.x + MUTE_BTN.w &&
             clickY >= MUTE_BTN.y && clickY <= MUTE_BTN.y + MUTE_BTN.h) {
@@ -6867,7 +6867,7 @@ canvas.addEventListener('pointerdown', (e) => {
     }
 
     // ==========================================
-    // CLICS EN EL TUTORIAL â€” Validación de pasos
+    // CLICS EN EL TUTORIAL — Validación de pasos
     // ==========================================
     if (estadoActual === ESTADOS.TUTORIAL) {
         const paso = TUTORIAL_PASOS[tutorialPasoActual];
@@ -7025,16 +7025,16 @@ canvas.addEventListener('pointerdown', (e) => {
                 // Carta vacía, deseleccionar todo
                 cartaSeleccionadaIndex = null;
             } else if (cartaSeleccionadaIndex === cartaTocadaIndex) {
-                // ¡SEGUNDO TOQUE en la misma carta! â†’ Jugarla
+                // ¡SEGUNDO TOQUE en la misma carta! → Jugarla
                 cartaSeleccionadaIndex = null;
                 jugarCarta(catTocada);
             } else {
-                // PRIMER TOQUE en esta carta â†’ Seleccionarla/levantarla
+                // PRIMER TOQUE en esta carta → Seleccionarla/levantarla
                 cartaSeleccionadaIndex = cartaTocadaIndex;
                 sistemaAudio.sfx('hover'); // Pequeño sonido de selección
             }
         } else {
-            // Toque fuera de todas las cartas â†’ Deseleccionar
+            // Toque fuera de todas las cartas → Deseleccionar
             cartaSeleccionadaIndex = null;
         }
     }
@@ -7598,7 +7598,7 @@ function volverAlMenuPrincipal() {
     mostrarConfirmacion(
         "¿Volver al Menú?",
         "Tu progreso se perderá",
-        function () { reiniciarAlMenu(); }, // SIN recargar â€” preserva tutorialCompletado
+        function () { reiniciarAlMenu(); }, // SIN recargar — preserva tutorialCompletado
         function () { document.getElementById('pause-menu-ui').style.display = 'flex'; }
     );
 }
@@ -7684,10 +7684,10 @@ window.cambiarPestañaLogros = function (tab) {
         let totalCartas = new Set([CARTAS_BASE.ofensiva, CARTAS_BASE.defensiva, ...CARTAS_TIENDA, ...POOL_CARTAS_RECOMPENSA].map(c => c.nombre)).size;
         content.innerHTML = `
             <div style="font-size: 1.2vw; color: #fff; line-height: 3vw; text-align: left; margin-left: 20%; margin-top: 2vw;">
-                <p style="color: #f1c40f;">ðŸ‘‘ Viajes Completados: <span style="color: #fff">${viajesCompletados}</span></p>
+                <p style="color: #f1c40f;">👑 Viajes Completados: <span style="color: #fff">${viajesCompletados}</span></p>
                 <p style="color: #e74c3c;">â˜ ï¸ Muertes de Mamani: <span style="color: #fff">${stats_muertes}</span></p>
-                <p style="color: #3498db;">ðŸ‘¹ Monstruos Derrotados: <span style="color: #fff">${stats_monstruos}</span></p>
-                <p style="color: #2ecc71;">ðŸŽ´ Cartas Descubiertas: <span style="color: #fff">${coleccion_cartas.length} / ${totalCartas}</span></p>
+                <p style="color: #3498db;">👹 Monstruos Derrotados: <span style="color: #fff">${stats_monstruos}</span></p>
+                <p style="color: #2ecc71;">🎴 Cartas Descubiertas: <span style="color: #fff">${coleccion_cartas.length} / ${totalCartas}</span></p>
             </div>
         `;
     } else if (tab === 'cartas') {
