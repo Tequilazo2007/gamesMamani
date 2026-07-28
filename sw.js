@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mamani-cache-v37';
+const CACHE_NAME = 'mamani-cache-v38';
 const urlsToCache = [
   './',
   './index.html',
@@ -20,11 +20,31 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  // Fuerza al nuevo Service Worker a tomar el control inmediatamente
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         return cache.addAll(urlsToCache);
       })
+  );
+});
+
+self.addEventListener('activate', event => {
+  // Toma el control de todas las pestañas abiertas al instante
+  event.waitUntil(self.clients.claim());
+  
+  // Borra cualquier caché viejo (por ejemplo v36, v37) para que no haya conflictos
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
 
