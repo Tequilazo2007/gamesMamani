@@ -199,8 +199,8 @@
             line-height: 1.9;
             min-width: clamp(160px, 26vw, 360px);
             max-width: clamp(200px, 40vw, 450px);
-            box-shadow: 0 clamp(2px, 0.3vw, 5px) clamp(6px, 1.2vw, 16px) rgba(0,0,0,0.7),
-                        inset 0 1px 0 rgba(255,255,255,0.08);
+            box-shadow: 0 clamp(2px, 0.3vw, 5px) clamp(6px, 1.2vw, 16px) rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
             animation: toastEntrar 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             position: relative;
         }
@@ -222,20 +222,64 @@
         }
 
         /* Tipos de toast */
-        .toast-info    { background: rgba(10,30,55,0.96);  border-color: #4db6f5; color: #7dd3fc; }
-        .toast-compra  { background: rgba(5,35,15,0.96);   border-color: #4ade80; color: #86efac; }
-        .toast-error   { background: rgba(55,5,5,0.96);    border-color: #f87171; color: #fca5a5; }
-        .toast-especial{ background: rgba(45,28,0,0.96);   border-color: #fbbf24; color: #fde68a; }
-        .toast-eventoMal { background: rgba(55,5,5,0.96);  border-color: #f87171; color: #fca5a5; }
-        .toast-eventoBien{ background: rgba(5,35,15,0.96); border-color: #4ade80; color: #86efac; }
+        .toast-info {
+            background: rgba(10, 30, 55, 0.96);
+            border-color: #4db6f5;
+            color: #7dd3fc;
+        }
+
+        .toast-compra {
+            background: rgba(5, 35, 15, 0.96);
+            border-color: #4ade80;
+            color: #86efac;
+        }
+
+        .toast-error {
+            background: rgba(55, 5, 5, 0.96);
+            border-color: #f87171;
+            color: #fca5a5;
+        }
+
+        .toast-especial {
+            background: rgba(45, 28, 0, 0.96);
+            border-color: #fbbf24;
+            color: #fde68a;
+        }
+
+        .toast-eventoMal {
+            background: rgba(55, 5, 5, 0.96);
+            border-color: #f87171;
+            color: #fca5a5;
+        }
+
+        .toast-eventoBien {
+            background: rgba(5, 35, 15, 0.96);
+            border-color: #4ade80;
+            color: #86efac;
+        }
 
         @keyframes toastEntrar {
-            from { opacity: 0; transform: translateY(-120%) scale(0.85); }
-            to   { opacity: 1; transform: translateY(0)     scale(1);    }
+            from {
+                opacity: 0;
+                transform: translateY(-120%) scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
+
         @keyframes toastSalir {
-            from { opacity: 1; transform: translateY(0)    scale(1);    }
-            to   { opacity: 0; transform: translateY(-80%) scale(0.9);  }
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-80%) scale(0.9);
+            }
         }
 
         /* ==========================================================================
@@ -245,7 +289,7 @@
             display: none;
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.78);
+            background: rgba(0, 0, 0, 0.78);
             z-index: 600;
             justify-content: center;
             align-items: center;
@@ -258,8 +302,13 @@
         }
 
         @keyframes modalEntrar {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .confirm-caja {
@@ -270,21 +319,28 @@
             width: clamp(260px, 42vw, 580px);
             max-width: 90%;
             text-align: center;
-            box-shadow: 0 0 clamp(10px, 3vw, 40px) rgba(245,158,11,0.25),
-                        inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: 0 0 clamp(10px, 3vw, 40px) rgba(245, 158, 11, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             animation: cajaEntrar 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         @keyframes cajaEntrar {
-            from { transform: scale(0.8); opacity: 0; }
-            to   { transform: scale(1);   opacity: 1; }
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .confirm-titulo {
             color: #fde68a;
             font-size: clamp(10px, 1.4vw, 20px);
             margin-bottom: clamp(8px, 1vw, 16px);
-            text-shadow: 0 0 clamp(5px, 1vw, 14px) rgba(253,230,138,0.4);
+            text-shadow: 0 0 clamp(5px, 1vw, 14px) rgba(253, 230, 138, 0.4);
         }
 
         .confirm-sub {
@@ -310,17 +366,210 @@
             border-style: solid;
             cursor: pointer;
             transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.1s ease;
-            box-shadow: 0 clamp(2px, 0.3vw, 5px) 0 rgba(0,0,0,0.5);
+            box-shadow: 0 clamp(2px, 0.3vw, 5px) 0 rgba(0, 0, 0, 0.5);
         }
 
-        .confirm-btn:hover  { transform: translateY(-2px); box-shadow: 0 4px 0 rgba(0,0,0,0.5); }
-        .confirm-btn:active { transform: translateY(1px);  box-shadow: 0 1px 0 rgba(0,0,0,0.5); }
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+        }
 
-        .confirm-btn-aceptar  { background: #b45309; border-color: #fbbf24; color: #fef3c7; }
-        .confirm-btn-aceptar:hover  { background: #d97706; border-color: #fcd34d; }
+        .confirm-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        }
 
-        .confirm-btn-cancelar { background: #1f2937; border-color: #4b5563; color: #9ca3af; }
-        .confirm-btn-cancelar:hover { background: #374151; border-color: #6b7280; color: #e5e7eb; }
+        .confirm-btn-aceptar {
+            background: #b45309;
+            border-color: #fbbf24;
+            color: #fef3c7;
+        }
+
+        .confirm-btn-aceptar:hover {
+            background: #d97706;
+            border-color: #fcd34d;
+        }
+
+        .confirm-btn-cancelar {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: #9ca3af;
+        }
+
+        .confirm-btn-cancelar:hover {
+            background: #374151;
+            border-color: #6b7280;
+            color: #e5e7eb;
+        }
+
+        /* ==========================================================================
+           PANTALLA DE CARGA
+        ========================================================================== */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background: #050508;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3vw;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        #loading-screen.ocultar {
+            animation: loadingFadeOut 0.8s ease-out forwards;
+        }
+
+        @keyframes loadingFadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+                pointer-events: none;
+                display: none;
+            }
+        }
+
+        .loading-titulo {
+            color: #ffcc00;
+            font-size: 2.8vw;
+            text-shadow: 0.3vw 0.3vw 0px #000, 0 0 2vw rgba(255, 204, 0, 0.5);
+            letter-spacing: 0.3vw;
+            animation: loadingPulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-subtitulo {
+            color: #e6005c;
+            font-size: 1.1vw;
+            text-shadow: 0.1vw 0.1vw 0px #000;
+            letter-spacing: 0.1vw;
+        }
+
+        @keyframes loadingPulse {
+
+            0%,
+            100% {
+                text-shadow: 0.3vw 0.3vw 0px #000, 0 0 1vw rgba(255, 204, 0, 0.3);
+            }
+
+            50% {
+                text-shadow: 0.3vw 0.3vw 0px #000, 0 0 3vw rgba(255, 204, 0, 0.8);
+            }
+        }
+
+        .loading-barra-contenedor {
+            width: 50vw;
+            max-width: 500px;
+            height: 1.5vw;
+            background: #1a1a2e;
+            border: 0.2vw solid #ffcc00;
+            border-radius: 0.4vw;
+            overflow: hidden;
+            box-shadow: 0 0 1vw rgba(255, 204, 0, 0.3);
+        }
+
+        .loading-barra-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #b8860b, #ffcc00, #ffd700);
+            transition: width 0.3s ease;
+            border-radius: 0.2vw;
+            box-shadow: 0 0 0.8vw rgba(255, 204, 0, 0.6);
+        }
+
+        .loading-texto-progreso {
+            color: #aaaaaa;
+            font-size: 0.9vw;
+            letter-spacing: 0.1vw;
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: loadingDots 1.2s steps(3, end) infinite;
+        }
+
+        @keyframes loadingDots {
+            0% {
+                content: '';
+            }
+
+            33% {
+                content: '.';
+            }
+
+            66% {
+                content: '..';
+            }
+
+            100% {
+                content: '...';
+            }
+        }
+
+        /* Botones HUD inline para Bolsa y Mazos */
+        .hud-btn-extra {
+            pointer-events: auto;
+            background: #121218;
+            color: #ffcc00;
+            border: 0.2vw solid #ffcc00;
+            padding: 0.4vw 0.8vw;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6vw;
+            cursor: pointer;
+            box-shadow: 0 0.3vw 0 #000;
+            transition: transform 0.05s, box-shadow 0.05s, background 0.05s;
+            white-space: nowrap;
+        }
+
+        .hud-btn-extra:hover {
+            background: #ffcc00;
+            color: #121218;
+            transform: translateY(-0.1vw);
+        }
+
+        .hud-btn-extra:active {
+            transform: translateY(0.1vw);
+            box-shadow: 0 0.1vw 0 #000;
+        }
+
+        /* Estado RESALTADO durante tutorial */
+        .hud-btn-highlight {
+            background: rgba(255, 204, 0, 0.25) !important;
+            border-color: #ffcc00 !important;
+            color: #ffcc00 !important;
+            transform: scale(1.25) translateY(-0.15vw) !important;
+            box-shadow: 0 0 1.5vw rgba(255, 204, 0, 0.9), 0 0 0.4vw rgba(255, 204, 0, 0.5) !important;
+            animation: hudHighlightPulse 0.75s ease-in-out infinite alternate !important;
+            z-index: 9999;
+            position: relative;
+        }
+
+        @keyframes hudHighlightPulse {
+            from {
+                box-shadow: 0 0 0.8vw rgba(255, 204, 0, 0.7), 0 0 0.2vw rgba(255, 204, 0, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 2.5vw rgba(255, 204, 0, 1), 0 0 0.8vw rgba(255, 204, 0, 0.8);
+            }
+        }
+
+        /* Estado APAGADO durante tutorial */
+        .hud-btn-dim {
+            opacity: 0.12 !important;
+            filter: grayscale(100%) brightness(0.4) !important;
+            pointer-events: none !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
     </style>
 </head>
 
@@ -362,6 +611,18 @@
         }
     </style>
 
+    <!-- =====================================================
+         PANTALLA DE CARGA (Visible mientras se descargan assets)
+    ====================================================== -->
+    <div id="loading-screen">
+        <p class="loading-subtitulo">LA SENDA DE MAMANI</p>
+        <p class="loading-titulo">CARGANDO<span class="loading-dots"></span></p>
+        <div class="loading-barra-contenedor">
+            <div class="loading-barra-fill" id="loading-barra"></div>
+        </div>
+        <p class="loading-texto-progreso" id="loading-progreso-txt">Preparando el viaje...</p>
+    </div>
+
     <!-- Contenedor maestro del juego -->
     <div id="game-container">
 
@@ -377,25 +638,23 @@
                 <!-- Aquí meteremos el texto dinámicamente con JS -->
             </div>
 
-            <!-- Botón fijo para volver al Menú Principal desde cualquier pantalla -->
-            <button onclick="abrirMenuPausa()" style="
+            <!-- Botones superiores: Bolsa, Mazos y Menú -->
+            <div style="
                     pointer-events: auto;
                     position: absolute;
                     top: 2%;
                     right: 2%;
-                    background: #121218;
-                    color: #ffcc00;
-                    border: 0.2vw solid #ffcc00;
-                    padding: 0.5vw 1vw;
-                    font-family: 'Press Start 2P', monospace;
-                    font-size: 0.65vw;
-                    cursor: pointer;
-                    box-shadow: 0 0.3vw 0 #000;
-                    transition: transform 0.05s, box-shadow 0.05s;
-                "
-                onmouseover="this.style.background='#ffcc00';this.style.color='#121218';this.style.transform='translateY(-0.1vw)'"
-                onmouseout="this.style.background='#121218';this.style.color='#ffcc00';this.style.transform=''">&#9776;
-                MEN&Uacute;</button>
+                    display: flex;
+                    gap: 0.6vw;
+                    align-items: center;
+                ">
+                <button id="hud-btn-bolsa" class="hud-btn-extra" onclick="abrirEquipoDesdeHud()"
+                    onmouseover="sistemaAudio.sfx('hover')">🎒 BOLSA</button>
+                <button id="hud-btn-mazos" class="hud-btn-extra" onclick="abrirMazoDesdeHud()"
+                    onmouseover="sistemaAudio.sfx('hover')">🃏 MAZOS</button>
+                <button id="hud-btn-menu" class="hud-btn-extra" onclick="abrirMenuPausa()"
+                    onmouseover="sistemaAudio.sfx('hover')">&#9776; MEN&Uacute;</button>
+            </div>
 
             <!-- Contenedor para las etiquetas de los nodos del mapa -->
             <div id="nodos-ui"
@@ -421,22 +680,28 @@
         <!-- Capa de interfaz para la pantalla de Logros -->
         <div id="logros-ui" class="overlay-ui"
             style="display: none; background: rgba(30, 15, 0, 0.95); flex-direction: column; align-items: center; font-family: 'Press Start 2P', monospace; text-align: center; padding: 2vw; overflow: hidden; box-sizing: border-box;">
-            <h2 style="color: #f1c40f; font-size: 1.8vw; margin-top: 2%; margin-bottom: 2%; text-shadow: 2px 2px 0px #000;">
+            <h2
+                style="color: #f1c40f; font-size: 1.8vw; margin-top: 2%; margin-bottom: 2%; text-shadow: 2px 2px 0px #000;">
                 🏆 EL MUSEO DE MAMANI 🏆</h2>
 
             <!-- Pestañas -->
             <div style="display: flex; gap: 1vw; margin-bottom: 2%;">
-                <button class="btn-retro" id="tab-reliquias" onclick="cambiarPestañaLogros('reliquias')" style="font-size: 1vw; padding: 1% 2%; background: #ffcc00; color: #121218;">RELIQUIAS</button>
-                <button class="btn-retro" id="tab-stats" onclick="cambiarPestañaLogros('stats')" style="font-size: 1vw; padding: 1% 2%;">ESTADÍSTICAS</button>
-                <button class="btn-retro" id="tab-cartas" onclick="cambiarPestañaLogros('cartas')" style="font-size: 1vw; padding: 1% 2%;">CARTAS</button>
+                <button class="btn-retro" id="tab-reliquias" onclick="cambiarPestañaLogros('reliquias')"
+                    style="font-size: 1vw; padding: 1% 2%; background: #ffcc00; color: #121218;">RELIQUIAS</button>
+                <button class="btn-retro" id="tab-stats" onclick="cambiarPestañaLogros('stats')"
+                    style="font-size: 1vw; padding: 1% 2%;">ESTADÍSTICAS</button>
+                <button class="btn-retro" id="tab-cartas" onclick="cambiarPestañaLogros('cartas')"
+                    style="font-size: 1vw; padding: 1% 2%;">CARTAS</button>
             </div>
 
             <!-- Contenedor dinámico -->
-            <div id="logros-content" style="width: 80%; height: 60%; background: rgba(0,0,0,0.6); border: 4px solid #5a3b20; border-radius: 1vw; padding: 2vw; overflow-y: auto; text-align: left; position: relative;">
+            <div id="logros-content"
+                style="width: 80%; height: 60%; background: rgba(0,0,0,0.6); border: 4px solid #5a3b20; border-radius: 1vw; padding: 2vw; overflow-y: auto; text-align: left; position: relative;">
                 <!-- JS inyectará el contenido aquí -->
             </div>
 
-            <button class="btn-retro" onclick="cerrarLogros()" style="margin-top: 2%; font-size: 1vw; padding: 1% 3%;">VOLVER AL MENÚ</button>
+            <button class="btn-retro" onclick="cerrarLogros()"
+                style="margin-top: 2%; font-size: 1vw; padding: 1% 3%;">VOLVER AL MENÚ</button>
         </div>
 
         <!-- Capa de interfaz para la pantalla de Créditos -->
@@ -558,9 +823,9 @@
         <div id="confirmacion-ui">
             <div class="confirm-caja">
                 <div class="confirm-titulo" id="confirm-titulo-text"></div>
-                <div class="confirm-sub"   id="confirm-sub-text"></div>
+                <div class="confirm-sub" id="confirm-sub-text"></div>
                 <div class="confirm-botones">
-                    <button class="confirm-btn confirm-btn-aceptar"  id="confirm-btn-aceptar">ACEPTAR</button>
+                    <button class="confirm-btn confirm-btn-aceptar" id="confirm-btn-aceptar">ACEPTAR</button>
                     <button class="confirm-btn confirm-btn-cancelar" id="confirm-btn-cancelar">CANCELAR</button>
                 </div>
             </div>
@@ -568,7 +833,7 @@
 
     </div>
 
-    <script src="app.js?v=27"></script>
+    <script src="app.js?v=37"></script>
 
     <script>
         if ('serviceWorker' in navigator) {

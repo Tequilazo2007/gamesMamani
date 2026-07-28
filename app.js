@@ -7,7 +7,7 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
         'Columna: ' + columnNo,
         'Detalle: ' + (error ? error.stack : 'No disponible')
     ].join('\n');
-    alert("¡SE DETECTÃ“ UN ERROR EN EL JUEGO!\n\n" + message);
+    alert("¡SE DETECTÓ UN ERROR EN EL JUEGO!\n\n" + message);
     return false;
 };
 
@@ -173,7 +173,7 @@ const ESTADOS = {
 };
 
 // ==========================================
-// CONFIGURACIÃ“N CENTRALIZADA DE COORDENADAS DE UI (ESCALABLE)
+// CONFIGURACIÓN CENTRALIZADA DE COORDENADAS DE UI (ESCALABLE)
 // ==========================================
 const UI_CONFIG = {
     // Cartas en mano (combate y tutorial) - Layout plano horizontal centrado
@@ -231,7 +231,8 @@ const UI_CONFIG = {
     },
     // Pantalla de Game Over
     gameOver: {
-        reintentar: { x: 175, y: 180, w: 130, h: 30 }
+        reintentar: { x: 175, y: 185, w: 130, h: 28 },
+        reintentarActo3: { x: 145, y: 222, w: 190, h: 28 }
     }
 };
 
@@ -297,7 +298,7 @@ function dibujarToast() { /* Las toasts son HTML; nada que dibujar en canvas */ 
 
 
 /* ==========================================================================
-   SISTEMA DE CONFIRMACIÃ“N HTML — Reemplaza confirm() del navegador
+   SISTEMA DE CONFIRMACIÓN HTML — Reemplaza confirm() del navegador
    ========================================================================== */
 const _confirmUI = document.getElementById('confirmacion-ui');
 
@@ -632,7 +633,7 @@ const TUTORIAL_PASOS = [
         ],
         spotlight: null, accion: "AUTO"
     },
-    // ── Paso 8: MISIÃ“N ──────────────────────────────────────────────────
+    // ── Paso 8: MISIÓN ──────────────────────────────────────────────────
     {
         id: 8, tipo: "MISION", duracion: 4500,
         color: "#e74c3c",
@@ -857,6 +858,7 @@ let actoActual = 0; // Empieza desde el tutorial (Acto 0)
 let mapaTutorialPaso = 0; // Controla el flujo del tutorial del mapa en el Acto 0
 let tiendaTutorialPaso = 0;
 let tiendaTutorialCompletado = false;
+let snapshotActo3 = null; // Guarda el estado del jugador al entrar al Acto 3 para poder reintentar
 
 // Objeto global del enemigo activo
 const enemigo = {
@@ -905,12 +907,12 @@ const enemigo = {
                 this.intencion = { tipo: "ATAQUE", valor: Math.round(16 * factor), descripcion: "Llamarada: " + Math.round(16 * factor) + " DMG" };
             }
             else if (actoActual === 3) {
-                // Jefe Final del Acto 3: Huiracocha (Salar Cósmico)
+                // Jefe Final del Acto 3: Huiracocha (Salar Cósmico) — dificultad ajustada
                 this.nombre = "Huiracocha";
-                this.hpMax = Math.round(850 * factor);
+                this.hpMax = Math.round(580 * factor);
                 this.hp = this.hpMax;
-                this.defensa = 0.40;
-                this.intencion = { tipo: "ATAQUE", valor: Math.round(25 * factor), descripcion: "Ira Cósmica: " + Math.round(25 * factor) + " DMG" };
+                this.defensa = 0.25;
+                this.intencion = { tipo: "ATAQUE", valor: Math.round(17 * factor), descripcion: "Ira Cósmica: " + Math.round(17 * factor) + " DMG" };
             }
         } else {
             // Cargar enemigo normal según el Acto actual
@@ -1790,8 +1792,8 @@ const NODOS_POR_ACTO = {
         { id: 9, x: 350, y: 185, tipo: "JEFE", ciudad: "Cerro Rico", label: "JEFE", completado: false, disponible: false, conexiones: [] }
     ],
 
-    // ── ACTO 3: ALTIPLANO Y SALAR CÃ“SMICO ────────────────────────────────────
-    // ── ACTO 3: SALAR CÃ“SMICO (Trayectoria de la línea azul) ────────────────────────────────────
+    // ── ACTO 3: ALTIPLANO Y SALAR CÓSMICO ────────────────────────────────────
+    // ── ACTO 3: SALAR CÓSMICO (Trayectoria de la línea azul) ────────────────────────────────────
     // Ruta lineal desde La Paz hacia el corazón del Salar Cósmico
     3: [
         { id: 0, x: 215, y: 70, tipo: "INICIO", ciudad: "La Paz", label: "INICIO", completado: true, disponible: false, conexiones: [1] },
@@ -1827,9 +1829,9 @@ const TIENDAS_POR_NODO = {
     "1_4": { // Trinidad: Mercado Beniense
         titulo: "Mercado de Trinidad",
         items: [
-            { id: "majadito", nombre: "Majadito", costo: 15, x: 90, y: 80, desc: "+25 Vida", emoji: "ðŸ›" },
+            { id: "majadito", nombre: "Majadito", costo: 15, x: 90, y: 80, desc: "+25 Vida", emoji: "ðŸ›" },
             { id: "copaiba", nombre: "Bálsamo Copaiba", costo: 20, x: 260, y: 80, desc: "+15 Def.", emoji: "🧪" },
-            { id: "cerbatana", nombre: "Cerbatana", costo: 30, x: 90, y: 145, desc: "35 Daño", emoji: "ðŸ¹" },
+            { id: "cerbatana", nombre: "Cerbatana", costo: 30, x: 90, y: 145, desc: "35 Daño", emoji: "ðŸ¹" },
             { id: "unadegato", nombre: "Uña de Gato", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "🌿" }
         ]
     },
@@ -1838,7 +1840,7 @@ const TIENDAS_POR_NODO = {
         items: [
             { id: "castana", nombre: "Castaña", costo: 12, x: 90, y: 80, desc: "+20 Vida", emoji: "🌰" },
             { id: "aceiteselva", nombre: "Aceite Almendra", costo: 18, x: 260, y: 80, desc: "+15 Def.", emoji: "💧" },
-            { id: "machete", nombre: "Machete", costo: 32, x: 90, y: 145, desc: "38 Daño", emoji: "ðŸ—¡ï¸" },
+            { id: "machete", nombre: "Machete", costo: 32, x: 90, y: 145, desc: "38 Daño", emoji: "🗡️" },
             { id: "resinaselva", nombre: "Sangre de Grado", costo: 22, x: 260, y: 145, desc: "Sana Males", emoji: "🩸" }
         ]
     },
@@ -1847,9 +1849,9 @@ const TIENDAS_POR_NODO = {
     "2_8": { // Potosí
         titulo: "Mercado de Potosí",
         items: [
-            { id: "chicha", nombre: "Chicha de Maíz", costo: 18, x: 90, y: 80, desc: "+30 Vida", emoji: "ðŸº" },
-            { id: "cuero", nombre: "Escudo de Cuero", costo: 28, x: 260, y: 80, desc: "+18 Def.", emoji: "ðŸ›¡ï¸" },
-            { id: "plata", nombre: "Plata del Cerro", costo: 35, x: 90, y: 145, desc: "+20 Def.", emoji: "âš™ï¸" },
+            { id: "chicha", nombre: "Chicha de Maíz", costo: 18, x: 90, y: 80, desc: "+30 Vida", emoji: "ðŸº" },
+            { id: "cuero", nombre: "Escudo de Cuero", costo: 28, x: 260, y: 80, desc: "+18 Def.", emoji: "🛡️" },
+            { id: "plata", nombre: "Plata del Cerro", costo: 35, x: 90, y: 145, desc: "+20 Def.", emoji: "⚙️" },
             { id: "menta", nombre: "Hierba Menta", costo: 22, x: 260, y: 145, desc: "Sana Males", emoji: "🌱" }
         ]
     },
@@ -1858,7 +1860,7 @@ const TIENDAS_POR_NODO = {
     "3_3": { // La Paz: Feria de Alasitas
         titulo: "Feria de Alasitas",
         items: [
-            { id: "lluchu", nombre: "Tunta", costo: 20, x: 90, y: 80, desc: "+35 Vida", emoji: "â˜ï¸" },
+            { id: "lluchu", nombre: "Tunta", costo: 20, x: 90, y: 80, desc: "+35 Vida", emoji: "â˜ï¸" },
             { id: "hoja", nombre: "Hoja de Coca", costo: 30, x: 260, y: 80, desc: "+25 Def.", emoji: "🌿" },
             { id: "boleadora", nombre: "Boleadora", costo: 40, x: 90, y: 145, desc: "45 Daño", emoji: "⚡" },
             { id: "incienso", nombre: "Incienso del Cerro", costo: 25, x: 260, y: 145, desc: "Sana Males", emoji: "💨" }
@@ -1867,7 +1869,7 @@ const TIENDAS_POR_NODO = {
     "3_7": { // Yungas: Mercado de los Espíritus
         titulo: "Mercado de los Espíritus",
         items: [
-            { id: "locoto", nombre: "Locoto Silvestre", costo: 18, x: 90, y: 80, desc: "+30 Vida", emoji: "ðŸŒ¶ï¸" },
+            { id: "locoto", nombre: "Locoto Silvestre", costo: 18, x: 90, y: 80, desc: "+30 Vida", emoji: "🌶️" },
             { id: "aymara", nombre: "Amuleto Aymara", costo: 35, x: 260, y: 80, desc: "+22 Def.", emoji: "🪬" },
             { id: "suri", nombre: "Pluma de Suri", costo: 38, x: 90, y: 145, desc: "42 Daño", emoji: "🦤" },
             { id: "koa", nombre: "K'oa Sagrada", costo: 28, x: 260, y: 145, desc: "Sana Males", emoji: "🔥" }
@@ -1922,7 +1924,7 @@ const BUFFS_NIVELES = [
     {
         id: 'defensa',
         nombre: 'Piel del Jaguar',
-        icono: 'ðŸ›¡ï¸',
+        icono: '🛡️',
         color: '#3498db',
         colorOsc: 'rgba(10,40,80,0.45)',
         niveles: [
@@ -1934,7 +1936,7 @@ const BUFFS_NIVELES = [
     {
         id: 'fuerza',
         nombre: 'Filo del Minero',
-        icono: 'âš”ï¸',
+        icono: '⚔️',
         color: '#e67e22',
         colorOsc: 'rgba(100,40,5,0.45)',
         niveles: [
@@ -2005,7 +2007,7 @@ const POOL_CARTAS_TIENDA = [
     },
     // ─── Nerfeo / Debilitar ─────────────────────────────────────────────────
     {
-        id: "cn1", nombre: "Mal de Ojo", costo: 40, desc: "Debilita enemigo", categoria: "nerfeo", emoji: "ðŸ‘ï¸",
+        id: "cn1", nombre: "Mal de Ojo", costo: 40, desc: "Debilita enemigo", categoria: "nerfeo", emoji: "ðŸ‘ï¸",
         tipo: "Nerfeo",
         carta: { nombre: "Mal de Ojo", costoAP: 1, tipo: "Nerfeo", categoria: "nerfeo", efecto: "DEBILITAR", valor: 0, cooldown: 2, descripcion: "Debilita: -5 ATK enemigo." }
     },
@@ -2016,7 +2018,7 @@ const POOL_CARTAS_TIENDA = [
     },
     // ─── Mejoras ofensivas (upgrade del slot) ───────────────────────────────
     {
-        id: "co2", nombre: "Golpe Certero", costo: 40, desc: "20 daño físico", categoria: "ofensiva", emoji: "âš”ï¸",
+        id: "co2", nombre: "Golpe Certero", costo: 40, desc: "20 daño físico", categoria: "ofensiva", emoji: "⚔️",
         tipo: "Ofensiva",
         carta: { nombre: "Golpe Certero", costoAP: 1, tipo: "Ofensiva", categoria: "ofensiva", daño: 20, cooldown: 1, descripcion: "Golpe preciso. Daño 20." }
     },
@@ -2055,7 +2057,7 @@ function obtenerCartasTiendaActual() {
         },
         // ─── Nerfeo / Debilitar ─────────────────────────────────────────────────
         {
-            id: "cn1", nombre: "Mal de Ojo", costo: 40, desc: "Debilita enemigo", categoria: "nerfeo", emoji: "ðŸ‘ï¸",
+            id: "cn1", nombre: "Mal de Ojo", costo: 40, desc: "Debilita enemigo", categoria: "nerfeo", emoji: "ðŸ‘ï¸",
             tipo: "Nerfeo",
             carta: { nombre: "Mal de Ojo", costoAP: 1, tipo: "Nerfeo", categoria: "nerfeo", efecto: "DEBILITAR", valor: 0, cooldown: 2, descripcion: "Debilita: -5 ATK enemigo." }
         },
@@ -2066,7 +2068,7 @@ function obtenerCartasTiendaActual() {
         },
         // ─── Mejoras ofensivas (upgrade del slot) ───────────────────────────────
         {
-            id: "co2", nombre: "Golpe Certero", costo: 40, desc: "20 daño físico", categoria: "ofensiva", emoji: "âš”ï¸",
+            id: "co2", nombre: "Golpe Certero", costo: 40, desc: "20 daño físico", categoria: "ofensiva", emoji: "⚔️",
             tipo: "Ofensiva",
             carta: { nombre: "Golpe Certero", costoAP: 1, tipo: "Ofensiva", categoria: "ofensiva", daño: 20, cooldown: 1, descripcion: "Golpe preciso. Daño 20." }
         },
@@ -2471,14 +2473,47 @@ function cargarGraficos(callback) {
     let totalRecursos = 0;
     let recursosCargados = 0;
 
+    // Referencias a la pantalla de carga HTML
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingBarra = document.getElementById('loading-barra');
+    const loadingProgrTxt = document.getElementById('loading-progreso-txt');
+
+    // Función para actualizar UI de carga
+    function actualizarProgreso() {
+        const pct = totalRecursos > 0 ? Math.round((recursosCargados / totalRecursos) * 100) : 100;
+        if (loadingBarra) loadingBarra.style.width = pct + '%';
+        if (loadingProgrTxt) loadingProgrTxt.textContent = 'Cargando assets: ' + pct + '%';
+    }
+
+    // Función que se ejecuta cuando terminan todos los recursos
+    function onTodoListo() {
+        actualizarProgreso(); // Asegurar 100%
+        if (loadingBarra) loadingBarra.style.width = '100%';
+        if (loadingProgrTxt) loadingProgrTxt.textContent = '¡Listo! Iniciando...';
+
+        // Esperar un momento para que el jugador vea el 100% antes de ocultar
+        setTimeout(() => {
+            if (loadingScreen) {
+                loadingScreen.classList.add('ocultar');
+                // Remover del DOM al terminar la animación para liberar recursos
+                loadingScreen.addEventListener('animationend', () => {
+                    loadingScreen.remove();
+                }, { once: true });
+            }
+            callback();
+        }, 400);
+    }
+
     // Contamos cuántas imágenes necesitamos cargar
     for (let categoria in ASSETS) {
         totalRecursos += Object.keys(ASSETS[categoria]).length;
     }
 
+    actualizarProgreso(); // Mostrar 0% al inicio
+
     // Si no hay imágenes Base64 cargadas todavía, iniciamos directo
     if (totalRecursos === 0) {
-        callback();
+        onTodoListo();
         return;
     }
 
@@ -2491,7 +2526,8 @@ function cargarGraficos(callback) {
             if (src === "") {
                 // Si el Base64 está vacío, simulamos que cargó para no romper el juego
                 recursosCargados++;
-                if (recursosCargados === totalRecursos) callback();
+                actualizarProgreso();
+                if (recursosCargados === totalRecursos) onTodoListo();
                 continue;
             }
 
@@ -2501,15 +2537,17 @@ function cargarGraficos(callback) {
             img.onerror = (err) => {
                 console.error("Error al cargar el asset: " + key, err);
                 recursosCargados++;
+                actualizarProgreso();
                 if (recursosCargados === totalRecursos) {
-                    callback();
+                    onTodoListo();
                 }
             };
 
             img.onload = () => {
                 recursosCargados++;
+                actualizarProgreso();
                 if (recursosCargados === totalRecursos) {
-                    callback(); // Arranca el juego cuando todas estén listas
+                    onTodoListo(); // Arranca el juego cuando todas estén listas
                 }
             };
 
@@ -2518,6 +2556,7 @@ function cargarGraficos(callback) {
         }
     }
 }
+
 /* ==========================================================================
    8. BUCLE PRINCIPAL DE RENDERIZADO (GAME LOOP)
    ========================================================================== */
@@ -2543,26 +2582,51 @@ function gameLoop() {
     // ==========================================
     // CONTROL AUTOMÁTICO DE INTERFAZ HTML
     // ==========================================
-    const hudElement = document.getElementById('hud-ui');
-    const nodosUiElement = document.getElementById('nodos-ui');
-
     const menuPausaAbierto =
         (document.getElementById('pause-menu-ui') && document.getElementById('pause-menu-ui').style.display === 'flex') ||
         (document.getElementById('equipamiento-ui') && document.getElementById('equipamiento-ui').style.display === 'flex') ||
         (document.getElementById('mazo-ui') && document.getElementById('mazo-ui').style.display === 'flex') ||
         (document.getElementById('stats-ui') && document.getElementById('stats-ui').style.display === 'flex');
 
-    let enDialogoTutorial = (actoActual === 0 && [0, 1, 3, 5, 6, 8].includes(mapaTutorialPaso));
-    if (estadoActual === ESTADOS.MAPA && !menuPausaAbierto && !enDialogoTutorial) {
-        // Solo en el mapa mostramos el HUD de progreso y las etiquetas de los nodos (si no hay menús abiertos)
-        if (hudElement) hudElement.style.display = 'flex';
-        if (nodosUiElement) nodosUiElement.style.display = 'block';
-    } else {
-        // En COMBATE, TIENDA, EVENTO, MENU, GAMEOVER, o MENÃšS DE PAUSA ocultamos todo el HUD
-        if (hudElement) hudElement.style.display = 'none';
-        if (nodosUiElement) {
-            nodosUiElement.style.display = 'none';
-            nodosUiElement.innerHTML = ""; // Limpiamos los nodos para cuando regresemos
+    let enDialogoTutorial = (actoActual === 0 && [0, 1, 3, 5, 6, 10].includes(mapaTutorialPaso));
+
+    // Solo actualizar el DOM si hubo un cambio real en el estado del HUD para no matar los FPS (60 veces por segundo)
+    if (!window._lastHudHash) window._lastHudHash = "";
+    const currentHudHash = `${estadoActual}-${menuPausaAbierto}-${enDialogoTutorial}-${mapaTutorialPaso}`;
+
+    if (window._lastHudHash !== currentHudHash) {
+        window._lastHudHash = currentHudHash;
+
+        const hudElement = document.getElementById('hud-ui');
+        const nodosUiElement = document.getElementById('nodos-ui');
+
+        if (estadoActual === ESTADOS.MAPA && !menuPausaAbierto && !enDialogoTutorial) {
+            if (hudElement) hudElement.style.display = 'flex';
+            if (nodosUiElement) nodosUiElement.style.display = 'block';
+        } else {
+            if (hudElement) hudElement.style.display = 'none';
+            if (nodosUiElement) {
+                nodosUiElement.style.display = 'none';
+                nodosUiElement.innerHTML = ""; // Limpiar solo una vez cuando el estado cambia
+            }
+        }
+
+        // Resaltar/apagar botones del HUD según el paso del tutorial
+        const _btnBolsa = document.getElementById('hud-btn-bolsa');
+        const _btnMazos = document.getElementById('hud-btn-mazos');
+        const _btnMenuH = document.getElementById('hud-btn-menu');
+        if (_btnBolsa && _btnMazos && _btnMenuH) {
+            if (actoActual === 0 && mapaTutorialPaso === 8) {
+                _btnBolsa.classList.add('hud-btn-highlight'); _btnBolsa.classList.remove('hud-btn-dim');
+                _btnMazos.classList.add('hud-btn-dim'); _btnMazos.classList.remove('hud-btn-highlight');
+                _btnMenuH.classList.add('hud-btn-dim'); _btnMenuH.classList.remove('hud-btn-highlight');
+            } else if (actoActual === 0 && mapaTutorialPaso === 9) {
+                _btnMazos.classList.add('hud-btn-highlight'); _btnMazos.classList.remove('hud-btn-dim');
+                _btnBolsa.classList.add('hud-btn-dim'); _btnBolsa.classList.remove('hud-btn-highlight');
+                _btnMenuH.classList.add('hud-btn-dim'); _btnMenuH.classList.remove('hud-btn-highlight');
+            } else {
+                [_btnBolsa, _btnMazos, _btnMenuH].forEach(b => b.classList.remove('hud-btn-highlight', 'hud-btn-dim'));
+            }
         }
     }
 
@@ -2679,7 +2743,7 @@ function dibujarCutscene() {
     ctx.fillRect(0, 0, 480, 45);      // Barra superior
     ctx.fillRect(0, 225, 480, 45);    // Barra inferior
 
-    // ── NÃšMERO DE SLIDE (esquina superior derecha) ──────────────────────
+    // ── NÚMERO DE SLIDE (esquina superior derecha) ──────────────────────
     ctx.fillStyle = "rgba(255,255,255,0.3)";
     ctx.font = "4px 'Press Start 2P'";
     ctx.textAlign = "right";
@@ -2913,11 +2977,11 @@ function dibujarTutorial() {
         ctx.fill();
     }
 
-    // ── LÃ“GICA DE AUTO-AVANCE PARA INFO Y MISION ─────────────────────────
+    // ── LÓGICA DE AUTO-AVANCE PARA INFO Y MISION ─────────────────────────
     // ── ELIMINADO: AUTO-AVANCE PARA INFO Y MISION ─────────────────────────
     // El usuario avanzará haciendo clic en su lugar.
 
-    // ── DIBUJAR PANELES SEGÃšN EL TIPO DE PASO ─────────────────────────────
+    // ── DIBUJAR PANELES SEGÚN EL TIPO DE PASO ─────────────────────────────
     if (paso.tipo === "INFO" || paso.tipo === "MISION") {
         // Panel Central Grande
         const panelW = 340;
@@ -3013,7 +3077,7 @@ function dibujarPantallaMapa() {
         ctx.fillRect(0, 0, 480, 270);
     }
 
-    // Dibujar líneas de conexión entre nodos (TEMPORALMENTE DESACTIVADO A PETICIÃ“N DE USUARIO)
+    // Dibujar líneas de conexión entre nodos (TEMPORALMENTE DESACTIVADO A PETICIÓN DE USUARIO)
     /*
     nodosMapa.forEach(nodo => {
         if (!nodo.conexiones) return;
@@ -3111,7 +3175,7 @@ function dibujarPantallaMapa() {
     ctx.fillRect(nodoActual.x - 4, nodoActual.y - 4, 8, 8);
 
     // ==========================================
-    // ACTUALIZACIÃ“N DINÁMICA DEL HUD HTML (LETRAS PERFECTAS)
+    // ACTUALIZACIÓN DINÁMICA DEL HUD HTML (LETRAS PERFECTAS)
     // ==========================================
     const hudTexto = document.getElementById('hud-texto');
     let nombreBioma = "";
@@ -3124,7 +3188,7 @@ function dibujarPantallaMapa() {
         nombreBioma = "ACTO 2: VALLES Y MINAS DE POTOSÍ";
         colorBioma = "#e67e22";
     } else if (actoActual === 3) {
-        nombreBioma = "ACTO 3: SALAR CÃ“SMICO";
+        nombreBioma = "ACTO 3: SALAR CÓSMICO";
         colorBioma = "#9b59b6";
     }
 
@@ -3135,7 +3199,7 @@ function dibujarPantallaMapa() {
             if (mapaTutorialPaso === 0) {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.85)";
                 ctx.fillRect(0, 0, 480, 270);
-                dibujarDialogoRPG(null, "Yatiri", "BIENVENIDO A ESTA AVENTURA. TÃš ERES MAMANI Y DEBES RECORRER ESTE CAMINO.", true);
+                dibujarDialogoRPG(null, "Yatiri", "BIENVENIDO A ESTA AVENTURA. TÚ ERES MAMANI Y DEBES RECORRER ESTE CAMINO.", true);
             } else if (mapaTutorialPaso === 1) {
                 // Spotlight on combat node
                 ctx.save();
@@ -3198,9 +3262,19 @@ function dibujarPantallaMapa() {
             }
         } else if (nodosMapa[5] && !nodosMapa[5].completado) {
             if ((nodosMapa[3] && nodosMapa[3].completado) || (nodosMapa[4] && nodosMapa[4].completado)) {
-                // Tutorial step 8 (Boss)
+                // Tutorial steps: 8=Bolsa, 9=Mazos, 10=Jefe
                 if (mapaTutorialPaso < 8) mapaTutorialPaso = 8;
                 if (mapaTutorialPaso === 8) {
+                    // Overlay oscuro — el efecto de resaltado lo hace el CSS en los botones HTML
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.82)";
+                    ctx.fillRect(0, 0, 480, 270);
+                    dibujarDialogoRPG(null, "Yatiri", "ESTA ES TU BOLSA. AQUI SE GUARDAN LOS OBJETOS QUE COMPRES EN LA TIENDA. PARA USARLOS EN COMBATE DEBES EQUIPARLOS DESDE LA BOLSA. ¡TOCA PARA CONTINUAR!", true, false);
+                } else if (mapaTutorialPaso === 9) {
+                    // Overlay oscuro — el efecto de resaltado lo hace el CSS en los botones HTML
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.82)";
+                    ctx.fillRect(0, 0, 480, 270);
+                    dibujarDialogoRPG(null, "Yatiri", "Y ESTE ES TU MAZO. AQUI SE GUARDAN TODAS LAS CARTAS QUE COMPRES EN LA TIENDA. PUEDES EDITARLO A TU GUSTO Y ELEGIR QUE CARTAS LLEVAR AL COMBATE. ¡TOCA PARA CONTINUAR!", true, false);
+                } else if (mapaTutorialPaso === 10) {
                     // Spotlight Boss
                     ctx.save();
                     ctx.beginPath();
@@ -3222,7 +3296,7 @@ function dibujarPantallaMapa() {
 
                     dibujarDialogoRPG(null, "Yatiri", "AHORA BATALLA CONTRA EL JEFE Y EXPLORA EL MUNDO CON BATALLAS. USAR LA TIENDA Y LOS CAMPAMENTOS O EVENTOS ES TOTALMENTE TU ELECCION. ¡SUERTE!", true, false);
                 } else {
-                    // mapaTutorialPaso >= 9
+                    // mapaTutorialPaso >= 11
                     const nodoJefe = nodosMapa[5];
                     ctx.fillStyle = "#f1c40f";
                     ctx.font = "6px 'Press Start 2P'";
@@ -3356,7 +3430,7 @@ function dibujarPantallaCombate() {
     actualizarAnimaciones();
 
     // ==========================================
-    // 1. CONFIGURACIÃ“N DE NITIDEZ (PIXEL ART)
+    // 1. CONFIGURACIÓN DE NITIDEZ (PIXEL ART)
     // ==========================================
     ctx.imageSmoothingEnabled = false;
     ctx.mozImageSmoothingEnabled = false;
@@ -3364,7 +3438,7 @@ function dibujarPantallaCombate() {
     ctx.msImageSmoothingEnabled = false;
 
     // ==========================================
-    // 2. SELECCIÃ“N Y DIBUJO DEL FONDO (480x270)
+    // 2. SELECCIÓN Y DIBUJO DEL FONDO (480x270)
     // ==========================================
     let fondoCargado = null;
 
@@ -3935,11 +4009,11 @@ function dibujarPantallaCombate() {
     if (enemigo.intencion.tipo === "ATAQUE") {
         gradTele.addColorStop(0, "#e74c3c");
         gradTele.addColorStop(1, "#c0392b");
-        iconoIntencion = "âš”ï¸";
+        iconoIntencion = "⚔️";
     } else if (enemigo.intencion.tipo === "DEFENSA") {
         gradTele.addColorStop(0, "#2ecc71");
         gradTele.addColorStop(1, "#27ae60");
-        iconoIntencion = "ðŸ›¡ï¸";
+        iconoIntencion = "🛡️";
     } else {
         gradTele.addColorStop(0, "#9b59b6");
         gradTele.addColorStop(1, "#8e44ad");
@@ -4024,7 +4098,7 @@ function dibujarPantallaCombate() {
     // ==========================================
     // 7. BOTONES REUBICADOS (Estilo Slay)
     // ==========================================
-    // BOTÃ“N HUIR (Arriba a la izquierda, discreto)
+    // BOTÓN HUIR (Arriba a la izquierda, discreto)
     const btnHuir = UI_CONFIG.combate.huir;
     const esJefe = enemigo.nombre.includes("El Jichi") || enemigo.nombre.includes("El Tío") || enemigo.nombre.includes("Huiracocha") || enemigo.nombre.includes("Jefe");
 
@@ -4049,7 +4123,7 @@ function dibujarPantallaCombate() {
         ctx.textAlign = "left";
     }
 
-    // BOTÃ“N END TURN (Subido un poco para evitar pisar al enemigo y al suelo)
+    // BOTÓN END TURN (Subido un poco para evitar pisar al enemigo y al suelo)
     const btnTerminar = UI_CONFIG.combate.terminarTurno;
     const hoverTerminar = esCursorSobreBoton(btnTerminar.x, btnTerminar.y, btnTerminar.w, btnTerminar.h);
     let ty = btnTerminar.y;
@@ -4310,14 +4384,14 @@ function dibujarPantallaCombate() {
         ctx.save();
         ctx.fillStyle = "#ffffff";
         ctx.font = "4px 'Press Start 2P'";
-        ctx.fillText("ðŸ›¡ï¸+" + jugador.escudo, xEsc + 2, yEsc + 7);
+        ctx.fillText("🛡️+" + jugador.escudo, xEsc + 2, yEsc + 7);
         ctx.restore();
     }
 
     // (Textos flotantes y efectos son renderizados por dibujarEfectosEspeciales())
 
     // ==========================================
-    // BANNER DE MISIÃ“N AL INICIAR COMBATE
+    // BANNER DE MISIÓN AL INICIAR COMBATE
     // ==========================================
     if (tiempoMisionCombate > 0 && !enModoTutorial) {
         const tiempoTranscurrido = Date.now() - tiempoMisionCombate;
@@ -4354,7 +4428,7 @@ function dibujarPantallaCombate() {
             ctx.fillStyle = "#ffcc00";
             ctx.font = "10px 'Press Start 2P'";
             ctx.textAlign = "center";
-            ctx.fillText("¡NUEVA MISIÃ“N: COMBATE!", 240, banY + 25);
+            ctx.fillText("¡NUEVA MISIÓN: COMBATE!", 240, banY + 25);
 
             // Texto descriptivo
             ctx.fillStyle = "#ffffff";
@@ -4479,7 +4553,7 @@ function dibujarPantallaRecompensa() {
     ctx.textAlign = "center";
     ctx.fillStyle = esRecompensaJefe ? "#f1c40f" : "#ffdd00";
     ctx.font = "10px 'Press Start 2P'";
-    ctx.fillText(esRecompensaJefe ? "¡VICTORIA Ã‰PICA!" : "¡VICTORIA!", 240, 55);
+    ctx.fillText(esRecompensaJefe ? "¡VICTORIA ÉPICA!" : "¡VICTORIA!", 240, 55);
 
     // Línea decorativa
     ctx.strokeStyle = "rgba(255, 200, 0, 0.4)";
@@ -4635,7 +4709,7 @@ function dibujarPantallaTienda() {
     ctx.fillStyle = "#fff"; ctx.font = "5px 'Press Start 2P'"; ctx.textAlign = "center";
     ctx.fillText("SALIR", btnV.x + btnV.w / 2, btnV.y + 12);
 
-    // ── PESTAÃ‘AS ────────────────────────────────────────────────────────
+    // ── PESTAÑAS ────────────────────────────────────────────────────────
     ctx.textAlign = "left";
     UI_CONFIG.tienda.tabs.forEach(tab => {
         const isSel = (pestanaTiendaActual === tab.id);
@@ -4790,7 +4864,7 @@ function dibujarPantallaTienda() {
                     ctx.drawImage(imgItem, cx + CW / 2 - 28, cy + 6, 56, 56);
                 } else {
                     ctx.font = "24px serif";
-                    ctx.fillText(item.emoji || (item.carta ? "ðŸƒ" : "✨"), cx + CW / 2, cy + 37);
+                    ctx.fillText(item.emoji || (item.carta ? "🎴" : "✨"), cx + CW / 2, cy + 37);
                 }
 
                 // Nombre de la carta
@@ -4915,13 +4989,13 @@ function dibujarPantallaTienda() {
         if (tiendaTutorialPaso === 0) {
             dibujarDialogoRPG(null, "Yatiri", "LA TIENDA SIRVE PARA COMPRAR OBJETOS Y CARTAS Y, MUY IMPORTANTE, SUBIR STATS. LOS OBJETOS LOS USAS EN COMBATE; SOLO LLEVAS 3 EN BOLSA, EL RESTO AL INVENTARIO.", true);
         } else if (tiendaTutorialPaso === 1) {
-            dibujarDialogoRPG(null, "Yatiri", "PUEDES 'CAMBIAR' LAS CARTAS PARA QUE APAREZCAN OTRAS Y CON EL BOTÃ“N 'COMPRAR' ADQUIERES LO QUE ELIJAS.", true, true);
+            dibujarDialogoRPG(null, "Yatiri", "PUEDES 'CAMBIAR' LAS CARTAS PARA QUE APAREZCAN OTRAS Y CON EL BOTÓN 'COMPRAR' ADQUIERES LO QUE ELIJAS.", true, true);
         } else if (tiendaTutorialPaso === 2) {
-            dibujarDialogoRPG(null, "Yatiri", "EN LA PESTAÃ‘A 'PASIVAS' SUBES TUS ESTADÍSTICAS PARA QUE SEA MÁS FÁCIL PASAR LOS ACTOS Y DERROTAR ENEMIGOS.", true);
+            dibujarDialogoRPG(null, "Yatiri", "EN LA PESTAÑA 'PASIVAS' SUBES TUS ESTADÍSTICAS PARA QUE SEA MÁS FÁCIL PASAR LOS ACTOS Y DERROTAR ENEMIGOS.", true);
         } else if (tiendaTutorialPaso === 3) {
-            dibujarDialogoRPG(null, "Yatiri", "EN 'MAZO' COMPRAS CARTAS. PUEDES LEER QUÃ‰ HACEN EN SU DESCRIPCIÃ“N. ¡SIRVEN PARA QUE TODO SEA MÁS FLUIDO Y MEJOR!", true);
+            dibujarDialogoRPG(null, "Yatiri", "EN 'MAZO' COMPRAS CARTAS. PUEDES LEER QUÉ HACEN EN SU DESCRIPCIÓN. ¡SIRVEN PARA QUE TODO SEA MÁS FLUIDO Y MEJOR!", true);
         } else if (tiendaTutorialPaso === 4) {
-            dibujarDialogoRPG(null, "Yatiri", "AHORA ES TU DECISIÃ“N SI QUIERES COMPRAR ALGO O SALIR PARA COMPRAR EN OTRO MOMENTO. ¡ES TOTALMENTE TU ELECCIÃ“N!", true);
+            dibujarDialogoRPG(null, "Yatiri", "AHORA ES TU DECISIÓN SI QUIERES COMPRAR ALGO O SALIR PARA COMPRAR EN OTRO MOMENTO. ¡ES TOTALMENTE TU ELECCIÓN!", true);
         }
     }
 
@@ -5170,12 +5244,12 @@ function dibujarPantallaEvento() {
         // Icono contextual según opción
         let icono = "🌿";
         const txtLower = opcion.texto.toLowerCase();
-        if (txtLower.includes("huir")) icono = "ðŸƒ";
-        else if (txtLower.includes("domar")) icono = "ðŸ¯";
+        if (txtLower.includes("huir")) icono = "ðŸƒ";
+        else if (txtLower.includes("domar")) icono = "ðŸ¯";
         else if (txtLower.includes("beber")) icono = "💧";
         else if (txtLower.includes("ofrenda")) icono = "🪙";
-        else if (txtLower.includes("rezar")) icono = "ðŸ™";
-        else if (idx === 1) icono = "â›°ï¸";
+        else if (txtLower.includes("rezar")) icono = "🙏";
+        else if (idx === 1) icono = "⛰️";
 
         ctx.fillStyle = "#ffffff";
         ctx.font = "12px serif";
@@ -5237,27 +5311,47 @@ function dibujarPantallaGameOver() {
     ctx.fillText("Pero el espiritu andino nunca se rinde.", 240, 150);
     ctx.restore();
 
-    // Botón para reintentar
+    // Botón para volver al menú ("VOLVER A INTENTAR")
     const btn = UI_CONFIG.gameOver.reintentar;
     const hover = esCursorSobreBoton(btn.x, btn.y, btn.w, btn.h);
     let by = btn.y;
     if (hover) {
         canvas.style.cursor = "pointer";
-        by -= 2; // Desplazar ligeramente hacia arriba
+        by -= 2;
     }
 
     ctx.fillStyle = hover ? "rgba(220, 50, 50, 0.95)" : "#c0392b";
     ctx.fillRect(btn.x, by, btn.w, btn.h);
-
     ctx.strokeStyle = hover ? "#ffcc00" : "#ffffff";
     ctx.strokeRect(btn.x, by, btn.w, btn.h);
-
     ctx.fillStyle = "#ffffff";
     ctx.font = "5px 'Press Start 2P'";
     ctx.textAlign = "center";
-    ctx.fillText("VOLVER A INTENTAR", btn.x + btn.w / 2, by + 18);
-    ctx.textAlign = "left"; // Restaurar
+    ctx.fillText("VOLVER AL MENU", btn.x + btn.w / 2, by + 17);
+    ctx.textAlign = "left";
+
+    // Botón "REINTENTAR ACTO 3" — solo visible si el jugador llegó al Acto 3
+    if (snapshotActo3 !== null) {
+        const btn3 = UI_CONFIG.gameOver.reintentarActo3;
+        const hover3 = esCursorSobreBoton(btn3.x, btn3.y, btn3.w, btn3.h);
+        let by3 = btn3.y;
+        if (hover3) {
+            canvas.style.cursor = "pointer";
+            by3 -= 2;
+        }
+
+        ctx.fillStyle = hover3 ? "rgba(30, 100, 200, 0.95)" : "#1a5cb8";
+        ctx.fillRect(btn3.x, by3, btn3.w, btn3.h);
+        ctx.strokeStyle = hover3 ? "#00ccff" : "#4dabf7";
+        ctx.strokeRect(btn3.x, by3, btn3.w, btn3.h);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "5px 'Press Start 2P'";
+        ctx.textAlign = "center";
+        ctx.fillText("REINTENTAR ACTO 3", btn3.x + btn3.w / 2, by3 + 17);
+        ctx.textAlign = "left";
+    }
 }
+
 
 function dibujarPantallaVictoriaTotal() {
     // Dibujar fondo de la victoria total (imgVictoriaBase64 cargado en victoriaTotal)
@@ -5842,7 +5936,7 @@ function aplicarEscalaCanvas() {
     canvas.height = phH;
 
     // Escalar el contexto para que el código de dibujo
-    // siga usando las coordenadas lógicas 480Ã—270
+    // siga usando las coordenadas lógicas 480×270
     ctx.scale(phW / 480, phH / 270);
 
     // Desactivar suavizado bilineal
@@ -5855,7 +5949,7 @@ function aplicarEscalaCanvas() {
 function abrirMenuPausa() {
     sistemaAudio.sfx('click');
     document.getElementById('pause-menu-ui').style.display = 'flex';
-    document.getElementById('hud-ui').style.display = 'none'; // Oculta los textos y el botón "MENÃš" de fondo
+    document.getElementById('hud-ui').style.display = 'none'; // Oculta los textos y el botón "MENÚ" de fondo
 
     // Deshabilitar botones de Bolsa y Mazos durante el combate
     const btnBolsa = document.getElementById('btn-pause-bolsa');
@@ -5889,8 +5983,8 @@ function abrirStats() {
     container.innerHTML = `
                 <div><span style="color:#e74c3c">❤ Vitalidad:</span> Nivel ${jugador.pasivas.vitalidad}</div>
                 <div><span style="color:#f1c40f">⚡ Energía:</span> Nivel ${jugador.pasivas.energia}</div>
-                <div><span style="color:#3498db">ðŸ›¡ï¸ Defensa:</span> Nivel ${jugador.pasivas.defensa}</div>
-                <div><span style="color:#e67e22">âš”ï¸ Fuerza:</span> Nivel ${jugador.pasivas.fuerza}</div>
+                <div><span style="color:#3498db">🛡️ Defensa:</span> Nivel ${jugador.pasivas.defensa}</div>
+                <div><span style="color:#e67e22">⚔️ Fuerza:</span> Nivel ${jugador.pasivas.fuerza}</div>
             `;
 }
 
@@ -5902,7 +5996,15 @@ function cerrarStats() {
 
 function abrirMazo() {
     sistemaAudio.sfx('click');
-    document.getElementById('pause-menu-ui').style.display = 'none';
+    // Si se abre desde el menú de pausa, marcamos la bandera y ocultamos el menú
+    if (document.getElementById('pause-menu-ui').style.display === 'flex') {
+        _abrioDesdeMenuPausa = true;
+        document.getElementById('pause-menu-ui').style.display = 'none';
+    } else {
+        // Se abre desde el HUD directo
+        _abrioDesdeMenuPausa = false;
+        document.getElementById('hud-ui').style.display = 'none';
+    }
     document.getElementById('mazo-ui').style.display = 'flex';
 
     renderizarMazoUi();
@@ -5977,7 +6079,7 @@ function renderizarMazoUi() {
                 if (cat === 'elemental') iconKey = 'fuego';
                 imgSrc = ASSETS.cartas[iconKey];
             }
-            let imgHtml = imgSrc ? `<img src="${imgSrc}" style="width: 2.5vw; height: 2.5vw; image-rendering: pixelated; margin-bottom: 0.5vw;">` : `<div style="font-size: 2.5vw; margin-bottom: 1vw;">${item.icono || 'ðŸƒ'}</div>`;
+            let imgHtml = imgSrc ? `<img src="${imgSrc}" style="width: 2.5vw; height: 2.5vw; image-rendering: pixelated; margin-bottom: 0.5vw;">` : `<div style="font-size: 2.5vw; margin-bottom: 1vw;">${item.icono || '🎴'}</div>`;
 
             inner += `
                         ${imgHtml}
@@ -6013,7 +6115,7 @@ function renderizarMazoUi() {
                 if (cat === 'elemental') iconKey = 'fuego';
                 imgSrcC = ASSETS.cartas[iconKey];
             }
-            let imgHtmlC = imgSrcC ? `<img src="${imgSrcC}" style="width: 2vw; height: 2vw; image-rendering: pixelated; margin-bottom: 0.5vw;">` : `<div style="font-size: 1.8vw; margin-bottom: 0.5vw;">${carta.icono || 'ðŸƒ'}</div>`;
+            let imgHtmlC = imgSrcC ? `<img src="${imgSrcC}" style="width: 2vw; height: 2vw; image-rendering: pixelated; margin-bottom: 0.5vw;">` : `<div style="font-size: 1.8vw; margin-bottom: 0.5vw;">${carta.icono || '🎴'}</div>`;
 
             containerColeccion.innerHTML += `
                         <div draggable="true" ondragstart="dragMazo(event, ${idx})"
@@ -6031,13 +6133,39 @@ function renderizarMazoUi() {
 function cerrarMazo() {
     sistemaAudio.sfx('retroceder');
     document.getElementById('mazo-ui').style.display = 'none';
-    document.getElementById('pause-menu-ui').style.display = 'flex';
+    // Si el menú de pausa estaba abierto antes, volvemos a él; de lo contrario volvemos al mapa (HUD)
+    if (_abrioDesdeMenuPausa) {
+        document.getElementById('pause-menu-ui').style.display = 'flex';
+    } else {
+        document.getElementById('hud-ui').style.display = 'flex';
+    }
 }
+
+// Bandera: indica si Bolsa/Mazo se abrió desde el menú de pausa (true) o desde el HUD (false)
+let _abrioDesdeMenuPausa = false;
 
 function abrirEquipoDesdePausa() {
     sistemaAudio.sfx('click');
+    _abrioDesdeMenuPausa = true;
     document.getElementById('pause-menu-ui').style.display = 'none';
     abrirEquipo();
+}
+
+// Se llama desde el botón del HUD (no del menú de pausa)
+function abrirEquipoDesdeHud() {
+    sistemaAudio.sfx('click');
+    _abrioDesdeMenuPausa = false;
+    document.getElementById('hud-ui').style.display = 'none';
+    abrirEquipo();
+}
+
+// Se llama desde el botón del HUD (no del menú de pausa)
+function abrirMazoDesdeHud() {
+    sistemaAudio.sfx('click');
+    _abrioDesdeMenuPausa = false;
+    document.getElementById('hud-ui').style.display = 'none';
+    document.getElementById('mazo-ui').style.display = 'flex';
+    renderizarMazoUi();
 }
 
 function abrirEquipo() {
@@ -6047,7 +6175,11 @@ function abrirEquipo() {
 
 function cerrarEquipo() {
     document.getElementById('equipamiento-ui').style.display = 'none';
-    document.getElementById('pause-menu-ui').style.display = 'flex';
+    if (_abrioDesdeMenuPausa) {
+        document.getElementById('pause-menu-ui').style.display = 'flex';
+    } else {
+        document.getElementById('hud-ui').style.display = 'flex';
+    }
 }
 
 function renderizarEquipoUI() {
@@ -6058,8 +6190,9 @@ function renderizarEquipoUI() {
         if (item) {
             slotsContainer.innerHTML += `
                         <div onclick="desequiparItem(${i})" style="width: 8vw; height: 10vw; background: rgba(255,255,255,0.1); border: 2px solid #e67e22; border-radius: 0.5vw; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center;">
-                            <img src="img/cat_${obtenerCategoriaItem(item.id)}.webp" style="width: 60%; height: auto; image-rendering: pixelated; margin-top: 10%;" />
-                            <div style="font-size: 0.7vw; color: #fff; margin-top: auto; margin-bottom: 5%;">${item.nombre || ''}</div>
+                            <img src="img/cat_${obtenerCategoriaItem(item.id)}.webp" style="width: 50%; height: auto; image-rendering: pixelated; margin-top: 5%;" />
+                            <div style="font-size: 0.7vw; color: #fff; margin-top: auto; margin-bottom: 1%;">${item.nombre || ''}</div>
+                            <div style="font-size: 0.55vw; color: #ccc; margin-bottom: 5%; padding: 0 2%;">${item.desc || ''}</div>
                         </div>
                     `;
         } else {
@@ -6078,9 +6211,10 @@ function renderizarEquipoUI() {
     } else {
         jugador.inventario.forEach((item, index) => {
             invContainer.innerHTML += `
-                        <div onclick="equiparItem(${index})" style="width: 6vw; height: 8vw; background: rgba(0,0,0,0.5); border: 1px solid #ffcc00; border-radius: 0.5vw; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; margin-bottom: 1vw;">
-                            <img src="img/cat_${obtenerCategoriaItem(item.id)}.webp" style="width: 60%; height: auto; image-rendering: pixelated; margin-top: 10%;" />
-                            <div style="font-size: 0.6vw; color: #ccc; margin-top: auto; margin-bottom: 5%;">${item.nombre || ''}</div>
+                        <div onclick="equiparItem(${index})" style="width: 7vw; height: 9vw; background: rgba(0,0,0,0.5); border: 1px solid #ffcc00; border-radius: 0.5vw; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; margin-bottom: 1vw;">
+                            <img src="img/cat_${obtenerCategoriaItem(item.id)}.webp" style="width: 50%; height: auto; image-rendering: pixelated; margin-top: 5%;" />
+                            <div style="font-size: 0.6vw; color: #ccc; margin-top: auto; margin-bottom: 1%;">${item.nombre || ''}</div>
+                            <div style="font-size: 0.45vw; color: #aaa; margin-bottom: 5%; padding: 0 2%;">${item.desc || ''}</div>
                         </div>
                     `;
         });
@@ -6159,7 +6293,7 @@ function volverAlMapa() {
     );
 }
 // ==========================================
-// FUNCIONES DE MENÃš PRINCIPAL (BOTONES EXTRAS)
+// FUNCIONES DE MENÚ PRINCIPAL (BOTONES EXTRAS)
 // ==========================================
 
 // Muestra la pantalla de Créditos
@@ -6194,7 +6328,7 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* ==========================================================================
-10.5. LÃ“GICA DE INTERACCIÃ“N CON CARTAS (NUEVO)
+10.5. LÓGICA DE INTERACCIÓN CON CARTAS (NUEVO)
 ========================================================================== */
 
 // Dimensiones y posiciones idénticas a las que usamos para dibujar las cartas
@@ -6214,7 +6348,7 @@ function usarItem(index) {
     // Pequeña animación visual del jugador al usar ítem
     activarAnimacion('jugador', 'ataque', { cat: 'mejora' });
 
-    // ── CURACIÃ“N DE VIDA ──────────────────────────────────────────────────
+    // ── CURACIÓN DE VIDA ──────────────────────────────────────────────────
     if (["saltena", "majadito", "chicha", "api", "lluchu", "locoto", "quinua"].includes(item.id)) {
         const cura = { saltena: 25, majadito: 25, chicha: 30, api: 25, lluchu: 35, locoto: 30, quinua: 35 }[item.id] || 25;
         jugador.hp = Math.min(jugador.hpMax, jugador.hp + cura);
@@ -6231,7 +6365,7 @@ function usarItem(index) {
         jugador.escudo += escudoVal;
         animaciones.textosFlotantes.push({ x: 80, y: 100, texto: `+${escudoVal} Escudo`, color: "#3498db", vida: 60, maxVida: 60 });
 
-        // ── DAÃ‘O AL ENEMIGO ───────────────────────────────────────────────────
+        // ── DAÑO AL ENEMIGO ───────────────────────────────────────────────────
     } else if (["cerbatana", "honda", "boleadora", "suri", "hacha"].includes(item.id)) {
         sistemaAudio.sfx('danoEnemigo');
         const danoVal = { cerbatana: 35, honda: 40, boleadora: 45, suri: 42, hacha: 50 }[item.id] || 35;
@@ -6395,7 +6529,7 @@ function jugarCarta(categoria) {
         }
     }
 
-    // CONDICIÃ“N DE VICTORIA
+    // CONDICIÓN DE VICTORIA
     if (enemigo.hp <= 0 && !enemigo.muriendo) {
         enemigo.muriendo = true;
         guardarLogro('monstruo'); // Sumar estadística de logros
@@ -6564,7 +6698,7 @@ function avanzarSiguienteActo() {
         ultimoTickTextoVictoria = Date.now();
 
         // Detener cualquier música y pasar al estado de victoria total
-        sistemaAudio._detenerMusica(0.5);
+        sistemaAudio.reproducirMusica('VICTORIA');
         sistemaAudio.sfx('confirmarEpico');
         estadoActual = ESTADOS.VICTORIA_TOTAL;
         return;
@@ -6594,6 +6728,23 @@ function avanzarSiguienteActo() {
     }
 
     if (actoActual === 3) {
+        // Guardar snapshot del estado del jugador al inicio del Acto 3
+        snapshotActo3 = {
+            hp: jugador.hp,
+            hpMax: jugador.hpMax,
+            ap: jugador.ap,
+            apMax: jugador.apMax,
+            escudo: jugador.escudo,
+            oro: jugador.oro,
+            inventario: JSON.parse(JSON.stringify(jugador.inventario)),
+            slotsCombate: JSON.parse(JSON.stringify(jugador.slotsCombate)),
+            reliquias: JSON.parse(JSON.stringify(jugador.reliquias)),
+            pasivas: JSON.parse(JSON.stringify(jugador.pasivas)),
+            danioBonus: jugador.danioBonus,
+            bloqueoBase: jugador.bloqueoBase,
+            mano: JSON.parse(JSON.stringify(jugador.mano)),
+            coleccionCartas: JSON.parse(JSON.stringify(jugador.coleccionCartas))
+        };
         // Cinemática de transición Acto 2 → 3 (Altiplano y Salar de Uyuni)
         iniciarCinematicaTransicion(CUTSCENE_SLIDES_ACTO3, function () {
             reiniciarMapaParaNuevoActo();
@@ -6670,7 +6821,7 @@ function terminarTurno() {
         }
     }
 
-    // --- DAÃ‘O POR ESTADOS AL ENEMIGO AL INICIAR SU TURNO ---
+    // --- DAÑO POR ESTADOS AL ENEMIGO AL INICIAR SU TURNO ---
     if (enemigo.estado === "QUEMADURA") {
         enemigo.hp = Math.max(0, enemigo.hp - 5);
         animaciones.textosFlotantes.push({ x: 360, y: 100, texto: "-5 (Quemadura)", color: "#e67e22", vida: 60, maxVida: 60 });
@@ -6787,7 +6938,7 @@ function terminarTurno() {
         }
     }
 
-    // --- NUEVO: DAÃ‘O POR ESTADOS DE MAMANI AL INICIAR SU TURNO ---
+    // --- NUEVO: DAÑO POR ESTADOS DE MAMANI AL INICIAR SU TURNO ---
     if (jugador.estado === "sangrado") {
         jugador.hp = Math.max(1, jugador.hp - 4); // Deja al menos 1 HP
         animaciones.textosFlotantes.push({ x: 80, y: 90, texto: "-4 (Sangrado)", color: "#c0392b", vida: 60, maxVida: 60 });
@@ -6820,7 +6971,7 @@ canvas.addEventListener('pointerdown', (e) => {
     }
 
     // ==========================================
-    // INTERCEPTOR: MODAL DE CONFIRMACIÃ“N HTML ACTIVO
+    // INTERCEPTOR: MODAL DE CONFIRMACIÓN HTML ACTIVO
     // El modal es HTML; los botones se manejan solos.
     // Solo bloqueamos clics del canvas mientras esté visible.
     // ==========================================
@@ -7045,7 +7196,7 @@ canvas.addEventListener('pointerdown', (e) => {
     else if (estadoActual === ESTADOS.MAPA) {
         // Interceptar clics para el tutorial del mapa en el Acto 0
         if (actoActual === 0) {
-            if (mapaTutorialPaso === 0 || mapaTutorialPaso === 1 || mapaTutorialPaso === 3 || mapaTutorialPaso === 5 || mapaTutorialPaso === 6 || mapaTutorialPaso === 8) {
+            if (mapaTutorialPaso === 0 || mapaTutorialPaso === 1 || mapaTutorialPaso === 3 || mapaTutorialPaso === 5 || mapaTutorialPaso === 6 || mapaTutorialPaso === 8 || mapaTutorialPaso === 9 || mapaTutorialPaso === 10) {
                 mapaTutorialPaso++;
                 sistemaAudio.sfx('hover');
                 return; // Bloqueamos interacción con el mapa mientras está el diálogo
@@ -7269,18 +7420,23 @@ canvas.addEventListener('pointerdown', (e) => {
                     mostrarToast("¡Oro insuficiente!", "No puedes pagar este artículo", "error");
                     return;
                 }
-                const esInstantaneo = (itemSeleccionadoTienda.desc || '').includes("HP") || (itemSeleccionadoTienda.desc || '').includes("Vida");
+
                 jugador.oro -= itemSeleccionadoTienda.costo;
                 sistemaAudio.sfx('compra');
-                if (esInstantaneo) {
-                    let cur = parseInt((itemSeleccionadoTienda.desc || '').replace(/\D/g, '')) || 20;
-                    if (modoLeyenda) cur = Math.round(cur * 0.7);
-                    jugador.hp = Math.min(jugador.hpMax, jugador.hp + cur);
-                    mostrarToast("¡" + itemSeleccionadoTienda.nombre + "!", "Recuperas " + cur + " HP" + (modoLeyenda ? " (Leyenda -30%)" : ""), "compra");
+
+                // Los objetos comprados van a los slots (si hay espacio) o a la mochila
+                const nuevoItem = { ...itemSeleccionadoTienda };
+                const slotLibre = jugador.slotsCombate.indexOf(null);
+                if (slotLibre !== -1) {
+                    // Auto-equipar en slot libre
+                    jugador.slotsCombate[slotLibre] = nuevoItem;
+                    mostrarToast("¡" + nuevoItem.nombre + " equipado!", "Listo para usar en combate (Slot " + (slotLibre + 1) + ")", "compra");
                 } else {
-                    jugador.inventario.push({ ...itemSeleccionadoTienda });
-                    mostrarToast("¡Comprado!", itemSeleccionadoTienda.nombre + " en inventario", "compra");
+                    // Sin espacio libre: va a la mochila
+                    jugador.inventario.push(nuevoItem);
+                    mostrarToast("¡Comprado!", nuevoItem.nombre + " guardado en mochila", "compra");
                 }
+
                 // Quitar item comprado de las opciones
                 const idx = itemsTiendaActuales.objetos.findIndex(it => it.id === itemSeleccionadoTienda.id);
                 if (idx !== -1) itemsTiendaActuales.objetos.splice(idx, 1);
@@ -7483,11 +7639,19 @@ canvas.addEventListener('pointerdown', (e) => {
     // CLICS EN LA PANTALLA DE GAME OVER
     // ==========================================
     else if (estadoActual === ESTADOS.GAMEOVER) {
-        // Detectar clic en el botón "VOLVER A INTENTAR"
+        // Detectar clic en el botón "VOLVER AL MENU"
         const btnReintentar = UI_CONFIG.gameOver.reintentar;
         if (clickX >= btnReintentar.x && clickX <= btnReintentar.x + btnReintentar.w && clickY >= btnReintentar.y && clickY <= btnReintentar.y + btnReintentar.h) {
             // Volver al menú SIN recargar la página (tutorialCompletado se mantiene en true)
             reiniciarAlMenu();
+        }
+
+        // Detectar clic en el botón "REINTENTAR ACTO 3" (solo visible si hay snapshot)
+        if (snapshotActo3 !== null) {
+            const btnActo3 = UI_CONFIG.gameOver.reintentarActo3;
+            if (clickX >= btnActo3.x && clickX <= btnActo3.x + btnActo3.w && clickY >= btnActo3.y && clickY <= btnActo3.y + btnActo3.h) {
+                reintentarActo3();
+            }
         }
     }
     // ==========================================
@@ -7593,6 +7757,53 @@ function reiniciarAlMenu() {
 }
 
 // Vuelve al menú principal con confirmación del jugador
+// Restaura el estado del jugador al inicio del Acto 3 y reinicia el mapa del Acto 3
+function reintentarActo3() {
+    if (!snapshotActo3) return;
+
+    // Ocultar UIs
+    document.getElementById('hud-ui').style.display = 'none';
+    document.getElementById('pause-menu-ui').style.display = 'none';
+    canvas.style.display = 'block';
+
+    // Restaurar todos los datos del jugador desde el snapshot
+    const s = snapshotActo3;
+    jugador.hp = s.hp;
+    jugador.hpMax = s.hpMax;
+    jugador.ap = s.ap;
+    jugador.apMax = s.apMax;
+    jugador.escudo = 0;
+    jugador.oro = s.oro;
+    jugador.inventario = JSON.parse(JSON.stringify(s.inventario));
+    jugador.slotsCombate = JSON.parse(JSON.stringify(s.slotsCombate));
+    jugador.reliquias = JSON.parse(JSON.stringify(s.reliquias));
+    jugador.pasivas = JSON.parse(JSON.stringify(s.pasivas));
+    jugador.danioBonus = s.danioBonus;
+    jugador.bloqueoBase = s.bloqueoBase;
+    jugador.mano = JSON.parse(JSON.stringify(s.mano));
+    jugador.coleccionCartas = JSON.parse(JSON.stringify(s.coleccionCartas));
+    jugador.cartasUsadasEsteTurno = {};
+
+    // Resetear estado del juego al Acto 3
+    actoActual = 3;
+    nodoActualIndex = 0;
+    cartaSeleccionadaIndex = null;
+    esRecompensaJefe = false;
+    reliquiaJefeObtenida = null;
+    campamentoAccionRealizada = false;
+
+    // Cargar el mapa del Acto 3 fresco
+    reiniciarMapaParaNuevoActo();
+
+    // Mostrar HUD y volver al mapa
+    document.getElementById('hud-ui').style.display = 'flex';
+    estadoActual = ESTADOS.MAPA;
+
+    sistemaAudio.reproducirMusica('MAPA');
+    mostrarToast("¡De vuelta al Acto 3!", "Con todo tu equipo del Acto 2", "eventoBien");
+}
+
+// Vuelve al menú principal con confirmación del jugador
 function volverAlMenuPrincipal() {
     document.getElementById('pause-menu-ui').style.display = 'none';
     mostrarConfirmacion(
@@ -7615,7 +7826,7 @@ cargarGraficos(() => {
     }
 
     // ==========================================
-    // CORRECCIÃ“N DE BORROSIDAD (Device Pixel Ratio)
+    // CORRECCIÓN DE BORROSIDAD (Device Pixel Ratio)
     // ==========================================
     // En pantallas de alta densidad (Retina, FHD+), el canvas debe tener
     // tantos píxeles físicos como la pantalla real para verse nítido.
@@ -7640,7 +7851,7 @@ cargarGraficos(() => {
 
 
 // ==========================================
-// LÃ“GICA DE LOGROS Y COLECCIÃ“N
+// LÓGICA DE LOGROS Y COLECCIÓN
 // ==========================================
 window.mostrarLogros = function () {
     document.getElementById('logros-ui').style.display = 'flex';
@@ -7685,7 +7896,7 @@ window.cambiarPestañaLogros = function (tab) {
         content.innerHTML = `
             <div style="font-size: 1.2vw; color: #fff; line-height: 3vw; text-align: left; margin-left: 20%; margin-top: 2vw;">
                 <p style="color: #f1c40f;">👑 Viajes Completados: <span style="color: #fff">${viajesCompletados}</span></p>
-                <p style="color: #e74c3c;">â˜ ï¸ Muertes de Mamani: <span style="color: #fff">${stats_muertes}</span></p>
+                <p style="color: #e74c3c;">â˜ ï¸ Muertes de Mamani: <span style="color: #fff">${stats_muertes}</span></p>
                 <p style="color: #3498db;">👹 Monstruos Derrotados: <span style="color: #fff">${stats_monstruos}</span></p>
                 <p style="color: #2ecc71;">🎴 Cartas Descubiertas: <span style="color: #fff">${coleccion_cartas.length} / ${totalCartas}</span></p>
             </div>
